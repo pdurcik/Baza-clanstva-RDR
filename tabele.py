@@ -1,4 +1,4 @@
-import clani as pf
+import pomozne_funkcije as pf
 
 
 
@@ -112,7 +112,25 @@ otroci = ["otroci",
          VALUES (%s,%s)
          RETURNING stars
          """]
-vse_tabele = [oseba, akcija, vod, otroci, udelezenec, prostovoljec]
+
+uporabniki = ["uporabnik",
+         """
+         CREATE TABLE uporabnik(
+            id SERIAL PRIMARY KEY,
+            username TEXT NOT NULL,
+            password TEXT NOT NULL
+            )
+
+        ;
+         """,
+         """
+         INSERT INTO uporabnik
+         (id, username, password)
+         VALUES (%s,%s,%s)
+         RETURNING id
+         """]
+
+vse_tabele = [oseba, akcija, vod, otroci, udelezenec, prostovoljec, uporabnik]
 #
 # for tabela in vse_tabele:
 #     pf.pobrisi_tabelo(tabela)
@@ -121,5 +139,3 @@ vse_tabele = [oseba, akcija, vod, otroci, udelezenec, prostovoljec]
 
 #pf.dodaj_stolpec('oseba', 'vod', 'INTEGER REFERENCES vod(id)')
 
-
-print('haha')

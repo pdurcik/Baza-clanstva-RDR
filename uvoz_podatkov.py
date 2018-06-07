@@ -1,4 +1,4 @@
-import clani as pf
+import pomozne_funkcije as pf
 
 pari_stars_otrok = [[13, 25],[17,26],[77,82],[11,5],[13,33],[13,14],[16,19],[17,88],[1,6],[1,7],[27,66],[54,72],[8,15]]
 

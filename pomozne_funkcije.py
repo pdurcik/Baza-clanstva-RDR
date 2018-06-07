@@ -25,7 +25,7 @@ def pobrisi_tabelo(tabela):
     conn.commit()
 
 def uvozi_podatke(seznam):
-    with open("podatki_novi.csv") as f:
+    with open("podatki.csv") as f:
         rd = csv.reader(f)
         next(rd) # izpusti naslovno vrstico
         idd = 0
@@ -75,5 +75,3 @@ def dodaj_stolpec(table, stolpec, datatype):
 def izbrisi_vse_tabele():
     for seznam in seznamVseh:
         pobrisi_tabelo(seznam)
-
-

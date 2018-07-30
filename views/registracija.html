@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <meta name="description" content="">
+  <meta name="author" content="">
+  <title>RDR - registracija</title>
+
+  <link href="/static/login.css" rel="stylesheet">
+</head>
+
+
+<div class="login-page">
+  <div class="form">
+    <form class="login-form" role="form" method="post" action=".">
+        %if napaka:
+        <div class="alert alert-warning">{{napaka}}</div>
+        %end
+        <h2>Registracija v bazo članstva RDR</h2>
+        <input type="name" class="form-control" placeholder="ime"
+               %if name:
+				value="{{name}}"
+				%end
+				name="name" required autofocus>
+        <input type="surname" class="form-control" placeholder="priimek"
+               %if surname:
+				value="{{surname}}"
+				%end
+				name="surname" requiredrequired autofocus>
+      <input type="username" class="form-control" placeholder="uporabniško ime"
+             %if username:
+				value="{{username}}"
+				%end
+				name="username" required autofocus>
+        <input type="password" class="form-control" placeholder="geslo" name="password" required>
+        <input class="form-control" name="confirmpassword" type="password" placeholder="potrdite geslo" required>
+        <input type="email" class="form-control" placeholder="email"
+                %if email:
+				value="{{email}}"
+				%end
+               name="email" required>
+
+
+
+      <button>registriraj se</button>
+        <p class="message">Nazaj na <a href="/prijava/">prijava</a></p>
+        <p class="message"><a href="/">Domov</a></p>
+    </form>
+  </div>
+</div>
+
+</html>
+

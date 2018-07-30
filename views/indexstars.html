@@ -1,0 +1,299 @@
+<!DOCTYPE html>
+<html>
+<title>Rod Dveh Rek</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" href="/static/uvodna.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+<style>
+body {font-family: "Lato", sans-serif}
+</style>
+<body>
+
+<!-- Navbar -->
+<div class="w3-top">
+  <div class="w3-bar w3-green w3-card">
+    <a class="w3-bar-item w3-button w3-padding-large w3-hide-medium w3-hide-large w3-right" href="javascript:void(0)" onclick="myFunction()" title="Toggle Navigation Menu"><i class="fa fa-bars"></i></a>
+    <a href="#" class="w3-bar-item w3-button w3-padding-large">DOMOV</a>
+
+    <a href="#rdr" class="w3-bar-item w3-button w3-padding-large w3-hide-small">RDR</a>
+    <a href="#akcije" class="w3-bar-item w3-button w3-padding-large w3-hide-small">AKCIJE</a>
+    <a href="#clanarina" class="w3-bar-item w3-button w3-padding-large w3-hide-small">ČLANARINA</a>
+    <a href="#vpis" class="w3-bar-item w3-button w3-padding-large w3-hide-small">VPIS</a>
+    <a href="#kontakt" class="w3-bar-item w3-button w3-padding-large w3-hide-small">KONTAKT</a>
+    <a href="/prijava/" class="w3-bar-item w3-button w3-padding-large">ODJAVA</a>
+  </div>
+</div>
+
+<!-- Navbar on small screens (remove the onclick attribute if you want the navbar to always show on top of the content when clicking on the links) -->
+<div id="navDemo" class="w3-bar-block w3-green w3-hide w3-hide-large w3-hide-medium w3-top" style="margin-top:46px">
+  <a href="#rdr" class="w3-bar-item w3-button w3-padding-large" onclick="myFunction()">RDR</a>
+  <a href="#akcije" class="w3-bar-item w3-button w3-padding-large" onclick="myFunction()">AKCIJE</a>
+  <a href="#clanarina" class="w3-bar-item w3-button w3-padding-large" onclick="myFunction()">ČLANARINA</a>
+  <a href="#vpis" class="w3-bar-item w3-button w3-padding-large">VPIS</a>
+  <a href="#kontakt" class="w3-bar-item w3-button w3-padding-large" onclick="myFunction()">ČLANARINA</a>
+</div>
+
+<!-- Page content -->
+<div class="w3-content" style="max-width:2000px;margin-top:46px">
+
+  <!-- Image - treba popravit!!! -->
+    <img src="/views/RDRgrb.jpg" style="width:40%">
+
+  <!-- The RDR Section -->
+  <div class="w3-container w3-content w3-center w3-padding-64" style="max-width:800px" id="rdr">
+    <h2 class="w3-wide">ROD DVEH REK</h2>
+    <p class="w3-opacity"><i>Z naravo k boljšemu človeku!</i></p>
+    <p class="w3-justify">Na tej strani lahko vidite pregled podatkov vaših otrok, na katere akcije so prijavljeni in če imajo plačano članarino. V kolikor ugotovite, da podatki niso točni, nam to prosim sporočite.
+      Poleg tega lahko v razdelku AKCIJE svoje otroke prijavite nanje. </p>
+    </div>
+
+  <!-- The akcije Section -->
+  <div class="w3-green" id="akcije">
+      <div class="w3-container w3-content w3-center w3-padding-64" style="max-width:800px">
+      <h2 class="w3-wide w3-center">VAŠ OTROK JE VPISAN V AKCIJE:</h2>
+      <p class="w3-opacity w3-center"><i>
+        % stevec = 0
+        %for i in rows:
+            <p>{{i['ime']}} :
+                % if prijavljeni_na_akcije[stevec] == []:
+                    Otrok ni vpisan v nobeno akcijo.
+                % end
+                %print (prijavljeni_na_akcije[stevec])
+                %for j in prijavljeni_na_akcije[stevec]:
+
+                    %print(j[0])
+                    %st = 0
+                    %for k in akcije:
+                        %print(k)
+                        %if k['id']==j[0]:
+                            {{akcije[st]['ime']}}
+                        %end
+                        %st +=1
+                    %end
+
+                %end
+            </p>
+            %stevec += 1
+
+        %end
+          %stevec = 0
+      </i></p><br>
+
+      <div class="w3-row-padding w3-padding-32" style="margin:0 -16px">
+        <div class="w3-third w3-margin-bottom">
+          <img src="/w3images/newyork.jpg" alt="Akcija1" style="width:100%" class="w3-hover-opacity">
+          <div class="w3-container w3-white">
+
+            %
+              <p><b>{{akcije[-3][1]}}</b></p>
+
+
+            <p class="w3-opacity">{{akcije[-3][2]}}</p>
+            <p>{{akcije[-3][5]}}</p>
+
+          <form action="." role="form" method="post" class="form">
+          Prijava na akcijo:
+          <select name="Izberi_otroka1">
+                %for row in rows:
+                  <option value={{row[0]}}>{{row[1]}}</option>
+                %end
+
+          </select>
+            <button type="submit" value="prijaviAkcija1", name="prijaviAkcija1" style="float:right; width:100px; margin-top: 8px;">Prijavi otroka</button>
+
+
+          </form>
+          </div>
+          </div>
+
+
+
+
+        <div class="w3-third w3-margin-bottom">
+          <img src="/w3images/paris.jpg" alt="Akcija2" style="width:100%" class="w3-hover-opacity">
+          <div class="w3-container w3-white">
+            <p><b>{{akcije[-2][1]}}</b></p>
+            <p class="w3-opacity">{{akcije[-2][2]}}</p>
+            <p>{{akcije[-2][5]}}</p>
+                      <form action="." role="form" method="post" class="form">
+          Prijava na akcijo:
+          <select name="Izberi_otroka2">
+            %for row in rows:
+
+               <option value = {{row[0]}}>{{row[1]}}</option>
+            %end
+
+          </select>
+            <button type="submit" value="prijaviAkcija2", name="prijaviAkcija2" style="float:right; width:100px; margin-top: 8px;">Prijavi otroka</button>
+
+
+          </form>
+          </div>
+          </div>
+
+        <div class="w3-third w3-margin-bottom">
+          <img src="/w3images/sanfran.jpg" alt="Akcija3" style="width:100%" class="w3-hover-opacity">
+          <div class="w3-container w3-white">
+            <p><b>{{akcije[-1][1]}}</b></p>
+            <p class="w3-opacity">{{akcije[-1][2]}}</p>
+            <p>{{akcije[-1][5]}}</p>
+                      <form action="." role="form" method="post" class="form">
+          Prijava na akcijo:
+          <select name="Izberi_otroka3">
+            %for row in rows:
+
+               <option value = {{row[0]}}>{{row[1]}}</option>
+            %end
+
+          </select>
+            <button type="submit" value="prijaviAkcija3", name="prijaviAkcija3" style="float:right; width:100px; margin-top: 8px;">Prijavi otroka</button>
+
+
+          </form>
+
+          </div>
+          </div>
+        </div>
+
+
+        <div class="card-body">
+          <div class="table">
+            <table class="table table-bordered" id="dataTable" width="100%" cellspacing="5">
+			  <tbody>
+			  % for row in rows:
+				<tr>
+					<td>{{row['ime']}} {{ row['priimek']}}, {{ row['rojstvo']}}, {{ row['naslov']}}</td> <!--kako se to nrdi da bo pisal lepo v eni vrstici?-->
+
+                </tr>
+			  %end
+			 </tbody>
+            </table>
+          </div>
+        </div>
+
+
+
+      </div>
+    </div>
+
+
+  <!-- The CLANARINA Section -->
+  <div class="w3-container w3-content w3-padding-64" style="max-width:800px" id="clanarina">
+
+    <h2 class="w3-wide w3-center">ČLANARINE</h2>
+
+    %nep = 0
+    %for i in rows:
+      %if i['clanarina']==0:
+          %nep += 1
+          <p>{{i['ime']}} nima plačane članarine!</p>
+    %end
+    %end
+    %if nep == 0:
+      <p>Članarina je plačana!</p>
+
+
+  </div>
+
+      <!-- The Vpis Section -->
+    <div class="w3-green" id="vpis">
+      <div class="w3-container w3-content w3-center w3-padding-64" style="max-width:800px">
+    <h2 class="w3-wide w3-center">VPIS</h2>
+    <p>Prosimo, vnesite podatke Vašega otroka in kliknite na gumb "Vpis".</p>
+
+    <form action="." role="form" method="post" class="form">
+			<div class="container">
+				<input type="name" class="form-control" placeholder="ime otroka" name="name" id="name" required>
+                <input type="surname" class="form-control" placeholder="priimek otroka" name="surname" id="surname" required>
+                <input type="date" class="form-control" placeholder="datum rojstva"  name="date" id="date" required>
+				<button type="submit" value="prijavi", name="prijavi" style="float:right; width:100px; margin-top: 8px;">Vpis</button>
+			</div>
+     </form>
+
+    </div>
+    </div>
+
+    <!-- The Kontakt Section -->
+  <div class="w3-container w3-content w3-padding-64" style="max-width:800px" id="kontakt">
+    <h2 class="w3-wide w3-center">KONTAKT</h2>
+    <div class="w3-row w3-padding-32">
+      <div class="w3-col m6 w3-large w3-margin-bottom">
+        <i class="fa fa-map-marker" style="width:30px"></i> Medvode, SLO<br>
+        <i class="fa fa-phone" style="width:30px"></i> Phone: +00 151515<br>
+        <i class="fa fa-envelope" style="width:30px"> </i> Email: baza.rdr@gmail.com <br>
+      </div>
+    </div>
+  </div>
+
+
+  </div>
+
+<!-- End Page Content -->
+</div>
+
+<script>
+function myMap() {
+  myCenter=new google.maps.LatLng(41.878114, -87.629798);
+  var mapOptions= {
+    center:myCenter,
+    zoom:12, scrollwheel: false, draggable: false,
+    mapTypeId:google.maps.MapTypeId.ROADMAP
+  };
+  var map=new google.maps.Map(document.getElementById("googleMap"),mapOptions);
+
+  var marker = new google.maps.Marker({
+    position: myCenter,
+  });
+  marker.setMap(map);
+}
+</script>
+<script>
+function prijavi() {
+    var ime = document.getElementById("name").value;
+    var priimek = document.getElementById("surname").value;
+    var datum = document.getElementById("date").value;
+    $.post("/indexstars/", {type: "prijavi"})
+    console.log(datum)
+}
+</script>
+
+
+<!-- Footer -->
+<footer class="w3-container w3-padding-64 w3-center w3-opacity w3-light-grey w3-xlarge">
+        <div class="text-center">
+         <small> <p>&copy; Copyright
+        <script language="JavaScript" type="text/javascript">
+            now = new Date
+            theYear=now.getYear()
+            if (theYear < 1900)
+            theYear=theYear+1900
+            document.write(theYear)
+        </script>
+         </small>
+        </div>
+    </footer>
+
+<script>
+
+// Used to toggle the menu on small screens when clicking on the menu button
+function myFunction() {
+    var x = document.getElementById("navDemo");
+    if (x.className.indexOf("w3-show") == -1) {
+        x.className += " w3-show";
+    } else {
+        x.className = x.className.replace(" w3-show", "");
+    }
+}
+
+// When the user clicks anywhere outside of the modal, close it
+var modal = document.getElementById('ticketModal');
+window.onclick = function(event) {
+  if (event.target == modal) {
+    modal.style.display = "none";
+  }
+}
+</script>
+
+</body>
+</html>

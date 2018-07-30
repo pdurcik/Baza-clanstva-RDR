@@ -1,0 +1,711 @@
+<!DOCTYPE html>
+<html>
+<title>Rod Dveh Rek</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" href="/static/uvodna.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-
+awesome.min.css">
+<style>
+body {font-family: "Lato", sans-serif}
+</style>
+<body>
+
+<!-- Navbar -->
+<div class="w3-top">
+  <div class="w3-bar w3-green w3-card">
+    <a class="w3-bar-item w3-button w3-padding-large w3-hide-medium w3-hide-large w3-right"
+href="javascript:void(0)" onclick="myFunction()" title="Toggle Navigation Menu"><i class="fa fa-bars"></i></a>
+    <a href="#" class="w3-bar-item w3-button w3-padding-large">DOMOV</a>
+
+    <a href="#člani" class="w3-bar-item w3-button w3-padding-large w3-hide-small">ČLANI</a>
+    <a href="#akcije" class="w3-bar-item w3-button w3-padding-large w3-hide-small">AKCIJE</a>
+    <a href="#vodi" class="w3-bar-item w3-button w3-padding-large w3-hide-small">VODI</a>
+    <a href="#išči" class="w3-bar-item w3-button w3-padding-large w3-hide-small">IŠČI</a>
+    <a href="#članarina" class="w3-bar-item w3-button w3-padding-large w3-hide-small">ČLANARINA</a>
+    <a href="/prijava/" class="w3-bar-item w3-button w3-padding-large">ODJAVA</a>
+  </div>
+</div>
+
+<!-- Navbar on small screens (remove the onclick attribute if you want the navbar to always show on top of the
+content when clicking on the links) -->
+<div id="navDemo" class="w3-bar-block w3-green w3-hide w3-hide-large w3-hide-medium w3-top" style="margin-
+top:46px">
+    <a href="#člani" class="w3-bar-item w3-button w3-padding-large" onclick="myFunction()">ČLANI</a>
+    <a href="#akcije" class="w3-bar-item w3-button w3-padding-large" onclick="myFunction()">AKCIJE</a>
+    <a href="#vodi" class="w3-bar-item w3-button w3-padding-large" onclick="myFunction()">VODI</a>
+    <a href="#išči" class="w3-bar-item w3-button w3-padding-large" onclick="myFunction()">IŠČI</a>
+    <a href="#članarina" class="w3-bar-item w3-button w3-padding-large" onclick="myFunction()">ČLANARINA</a>
+</div>
+
+<!-- Page content -->
+<div class="w3-content" style="max-width:2000px;margin-top:46px">
+
+  <!-- Image - treba popravit!!! -->
+  <div class="w3-container w3-content w3-center w3-padding-64" style="max-width:800px">
+    <p class="w3-justify">Pozdravljeni! Prijavljeni ste kot admin. Na tej strani lahko urejate naslednje
+stvari: bla bla bla</p>
+    </div>
+    <div class="w3-row w3-padding-32">
+
+  <!-- The ČLANI Section -->
+      <div class="w3-green" id="člani">
+  <div class="w3-container w3-content w3-center w3-padding-64"   >
+    <div id="briši">
+    <h2 class="w3-wide">DODAJ/IZBRIŠI ČLANA</h2>
+    <p><font color="white"><b>Dodaj člana</b></font></p>
+    <form action="." role="form" method="post" class="form">
+      <label><i class="add">Vnesite podatke novega člana</i></label>
+			<div class="container">
+
+				<input type="name" class="form-control" placeholder="ime" name="name"
+id="name" required>
+                <input type="surname" class="form-control" placeholder="priimek" name="surname" id="surname"
+required>
+                <input type="date" class="form-control" placeholder="datum rojstva"  name="date" id="date"
+required>
+              <input type="address" class="form-control" placeholder="naslov"  name="address" id="address"
+required>
+              <input type="email" class="form-control" placeholder="emal"  name="email" id="email">
+              <form action=".">
+                  <select name="funkcija">
+                    <option value="otrok">otrok</option>
+                    <option value="starš">starš</option>
+                    <option value="blagajnik">blagajnik</option>
+                    <option value="gospodar">gospodar</option>
+                    <option value="GG načelnik">GG načelnik</option>
+                    <option value="MČ načelnik">MČ načelnik</option>
+                    <option value="PP načelnik">PP načelnik</option>
+                    <option value="RR načelnik">RR načelnik</option>
+                    <option value="starešina">starešina</option>
+                    <option value="tajnik">tajnik</option>
+                  </select>
+                  <!--<input type="submit" placeholder="kaj dela?"  class="form-control" required>-->
+
+              <input type="tel" class="form-control" placeholder="telefon"  name="telefon" id="telefon">
+              <input type="text" class="form-control" placeholder="zaposlitev"  name="zaposlitev"
+id="zaposlitev">
+
+                  <select name="vod">
+                    <option value="" selected>vod</option>
+                     % for row in vodi_vse:
+                        <option value="{{row['id']}}">{{row['ime']}}</option>
+
+                      % end
+                  </select>
+                  <!--<input type="submit" placeholder="kaj dela?"  class="form-control" required>-->
+                </form>
+
+				<button type="submit" value="dodajclan", name="dodajclan" style="float:right;
+width:100px; margin-top: 8px;">Dodaj</button>
+			</div>
+     </form>
+    <br>
+
+        <p><font color="white"><b>Izbriši člana</b></font></p>
+    <form action="." role="form" method="post" class="form">
+      <label><i class="add">Vnesite podatke člana, ki ga želite izbrisati</i></label>
+			<div class="container">
+
+				<input type="name" class="form-control" placeholder="ime" name="name"
+id="name" required>
+                <input type="surname" class="form-control" placeholder="priimek" name="surname" id="surname"
+required>
+                <input type="date" class="form-control" placeholder="datum rojstva"  name="date" id="date"
+required>
+              <input type="address" class="form-control" placeholder="naslov"  name="address" id="address"
+required>
+
+              <br>
+				<button type="submit" value="izbrisiclan", name="izbrisiclan"
+style="float:right; width:100px; margin-top: 8px;">Izbriši</button>
+			<div class="custom-select" style="width:200px;">
+          </div>
+            </div>
+     </form>
+        </div>
+    <br><br><br><br>
+    <h2 class="w3-wide">USTVARI RELACIJO STARŠ-OTROK</h2>
+   <label>Dodajte staršu otroka, da ga bo lahko prijavil na akcijo. Pozor: obe osebi morata biti vpisani!
+<label>
+        <form action="." role="form" method="post" class="form">
+			<div class="container">
+
+				<input type="name" class="form-control" placeholder="ime starša"
+name="namestars" id="name" required>
+                <input type="surname" class="form-control" placeholder="priimek starša" name="surnamestars"
+id="surname" required>
+                <input type="date" class="form-control" placeholder="datum rojstva starša"  name="datestars"
+id="date" required>
+              <input type="address" class="form-control" placeholder="naslov starša"  name="addressstars"
+id="address" required>
+
+              <br>
+                <input type="name" class="form-control" placeholder="ime otroka" name="nameotrok" id="name"
+required>
+                <input type="surname" class="form-control" placeholder="priimek otroka" name="surnameotrok"
+id="surname" required>
+                <input type="date" class="form-control" placeholder="datum rojstva otroka"  name="dateotrok"
+id="date" required>
+              <input type="address" class="form-control" placeholder="naslov otroka"  name="addressotrok"
+id="address" required>
+              <br>
+				<button type="submit" value="starsotrok", name="starsotrok"
+style="float:right; width:100px; margin-top: 8px;">Potrdi</button>
+			<div class="custom-select" style="width:200px;">
+          </div>
+            </div>
+
+          	  <h5>
+                %if napaka is not None:
+                    {{napaka}}
+                %end
+              </h5>
+
+
+     </form>
+     <br>
+     <br>
+     <h2 class="w3-wide">SPREMENI FUNKCIJO OSEBE</h2>
+
+             <form action="." role="form" method="post" class="form">
+			<div class="container">
+                 <input type="name" class="form-control" placeholder="ime" name="nameotrok" id="name"
+required>
+                <input type="surname" class="form-control" placeholder="priimek" name="surnameotrok"
+id="surname" required>
+                <input type="date" class="form-control" placeholder="datum rojstva"  name="dateotrok"
+id="date" required>
+              <input type="address" class="form-control" placeholder="naslov"  name="addressotrok"
+id="address" required>
+              <input type="function" class="form-control" placeholder="nova funkcija"  name="function"
+id="function" required>
+              <br>
+				<button type="submit" value="funkcija", name="funkcija" style="float:right;
+width:100px; margin-top: 8px;">Spremeni</button>
+			<div class="custom-select" style="width:200px;">
+          </div>
+            </div>
+
+          	  <h5>
+                %if napaka is not None:
+                    {{napaka}}
+                %end
+              </h5>
+
+
+     </form>
+
+  </div>
+  </div>
+
+  <!-- The AKCIJE Section -->
+    <div class="w3-container w3-content w3-padding-64 w3-center" id="akcije">
+      <h2 class="w3-wide w3-center">SEZNAM AKCIJ</h2>
+
+        <table class="w3-table-all" id="dataTable" width="100%" cellspacing="0">
+          <thead>
+            <tr>
+              <th>Ime</th>
+              <th>Datum</th>
+              <th>Trajanje</th>
+            </tr>
+          </thead>
+          <tbody>
+          % for row in akcije_vse:
+            <tr>
+              %for col in row:
+                <td>{{col}}</td>
+              %end
+            </tr>
+          %end
+         </tbody>
+          </table>
+
+      <h2 class="w3-wide w3-center">DODAJ/IZBRIŠI AKCIJO</h2>
+      <p><font color="black"><b>Dodaj akcijo</b></font></p>
+       <form action="." role="form" method="post" class="form" id="usrform">
+          <div class="container w3-center">
+
+              <input type="name" class="form-control" placeholder="ime akcije" name="nameakc1" id="nameakc1"
+required>
+
+              <input type="date" class="form-control" placeholder="datum"  name="dateakc1" id="dateakc1"
+required>
+            <input type="text" class="form-control" placeholder="trajanje"  name="time" id="time" required>
+            <input type="number" class="form-control" placeholder="id organizatorja"  name="organizator"
+id="organizator" required>
+              <textarea rows="2" cols="35" name="comment" id="comment" form_id="usrform">opis</textarea>
+
+            <br>
+              <button type="submit" value="dodajakcijo", name="dodajakcijo" style="float:right; width:100px;
+margin-top: 8px;">Dodaj</button>
+          <div class="custom-select" style="width:200px;">
+        </div>
+      </div>
+                   	  <h5>
+                %if napaka2 is not None:
+                    {{napaka2}}
+                %end
+              </h5>
+         </form>
+      <br>
+      <br>
+      <p><font color="black"><b>Izbriši akcijo</b></font></p>
+       <form action="." role="form" method="post" class="form">
+        <div class="container w3-center">
+              <input type="name" class="form-control" placeholder="ime akcije" name="name" id="name" required>
+              <input type="date" class="form-control" placeholder="datum"  name="date" id="date" required>
+            <br>
+              <button type="submit" value="izbrisiakcijo", name="izbrisiakcijo" style="float:right;
+width:100px; margin-top: 8px;">Izbriši</button>
+          <div class="custom-select" style="width:200px;">
+        </div>
+      </div>
+       </form>
+
+    </div>
+
+
+<!-- The VODI Section -->
+<div class="w3-green" id="vodi">
+  <div class="w3-container w3-content w3-center w3-padding-64" >
+
+      <h2 class="w3-wide w3-center">SEZNAM VODOV</h2>
+
+        <table class="w3-table-alll" id="dataTable" width="100%" cellspacing="0">
+          <thead>
+            <tr>
+              <th>Ime</th>
+              <th>Starost</th>
+              <th>Termin</th>
+            </tr>
+          </thead>
+          <tbody>
+          % for row in vodi_vse:
+            <tr>
+              %for col in row:
+                <td>{{col}}</td>
+              %end
+            </tr>
+          %end
+         </tbody>
+          </table>
+
+      <h2 class="w3-wide w3-center">DODAJ/IZBRIŠI VOD</h2>
+      <p><b>Dodaj vod</b></p>
+       <form action="." role="form" method="post" class="form">
+          <div class="container w3-center">
+
+              <input type="name" class="form-control" placeholder="ime voda" name="namevod1" id="namevod1"
+required>
+
+              <input type="number" class="form-control" placeholder="starost"  name="starost" id="starost"
+required>
+            <input type="number" class="form-control" placeholder="termin"  name="termin" id="termin"
+required>
+            <input type="number" class="form-control" placeholder="id vodnika"  name="vodnik" id="vodnik"
+required>
+
+            <br>
+              <button type="submit" value="dodajvod", name="dodajvod" style="float:right; width:100px;
+margin-top: 8px;">Dodaj</button>
+          <div class="custom-select" style="width:200px;">
+        </div>
+      </div>
+                   	  <h5>
+                %if napaka3 is not None:
+                    {{napaka3}}
+                %end
+              </h5>
+         </form>
+      <br>
+      <br>
+      <p><b>Izbriši vod</b></p>
+       <form action="." role="form" method="post" class="form">
+        <div class="container w3-center">
+              <input type="name" class="form-control" placeholder="ime voda" name="name" id="name" required>
+            <br>
+              <button type="submit" value="izbrisivod", name="izbrisivod" style="float:right; width:100px;
+margin-top: 8px;">Izbriši</button>
+          <div class="custom-select" style="width:200px;">
+        </div>
+      </div>
+       </form>
+      </div>
+    </div>
+
+
+      <!-- The Vpis Section -->
+  <div class="w3-container w3-content w3-padding-64 w3-center" id="išči">
+    <h2 class="w3-wide w3-center">IŠČI</h2>
+    <p class="w3-center">Izberite akcijo oziroma vod in izpisali se vam bodo podatki oseb, ki sodelujejo.</p>
+
+        <form action="." role="form" method="post" class="form">
+			<div class="container">
+
+              <form action=".">
+                  <select name="akcija2">
+                    <option value="" selected>akcija</option>
+                     % for row in rows_akcija:
+
+                            <option value="{{row}}">{{row}}</option>
+
+                      % end
+                  </select>
+                  <select name="vod2">
+                    <option value="" selected>vod</option>
+                     % for row in rows_vod:
+
+
+                            <option value="{{row}}">{{row}}</option>
+
+                      % end
+                  </select>
+                </form>
+				<button type="submit" value="izpis", name="izpis" style="float:right;
+width:100px; margin-top: 8px;">Izpiši</button>
+			</div>
+     </form>
+
+    			% if akcija_tabela is not None:
+				<table class="w3-table-all" id="dataTable" width="100%" cellspacing="0">
+				  <thead>
+					<tr>
+                      <th>Ime</th>
+                      <th>Priimek</th>
+                      <th>Funkcija</th>
+                      <th>Akcija</th>
+					</tr>
+				  </thead>
+				  <tbody>
+				  % for row in akcija_tabela:
+					<tr>
+					  %for col in row:
+						<td>{{col}}</td>
+					  %end
+					</tr>
+				  %end
+				 </tbody>
+                  %end
+                </table>
+
+    			% if vod_tabela is not None:
+				<table class="w3-table-all" id="dataTable" width="100%" cellspacing="0">
+				  <thead>
+					<tr>
+                      <th>Ime</th>
+                      <th>Priimek</th>
+                      <th>Funkcija</th>
+                      <th>Vod</th>
+					</tr>
+				  </thead>
+				  <tbody>
+				  % for row in vod_tabela:
+					<tr>
+					  %for col in row:
+						<td>{{col}}</td>
+					  %end
+					</tr>
+				  %end
+				 </tbody>
+                  %end
+                  </table>
+
+                  % if skupna_tabela is not None:
+				<table class="w3-table-all" id="dataTable" width="100%" cellspacing="0">
+				  <thead>
+					<tr>
+                      <th>Ime</th>
+                      <th>Priimek</th>
+                      <th>Funkcija</th>
+                      <th>Akcija</th>
+                      <th>Vod</th>
+					</tr>
+				  </thead>
+				  <tbody>
+				  % for row in skupna_tabela:
+					<tr>
+					  %for col in row:
+						<td>{{col}}</td>
+					  %end
+					</tr>
+				  %end
+				 </tbody>
+                  %end
+                  </table>
+
+    <br>
+    <br>
+
+    <!--Make sure the form has the autocomplete function switched off:-->
+        <p class="w3-center">Išči osebe po imenu ali priimku (začni tipkati in predlogi se bodo pojavili).</p>
+        <form autocomplete="off" action="." method="post">
+          <div class="autocomplete" style="width:300px;">
+            <input type="text" name="ime" id="ime" placeholder="ime" list="imena" />
+            </div>
+          <div class="autocomplete" style="width:300px;">
+
+            <input type="text" name="priimek" id="priimek" placeholder="priimek" list="priimki" />
+          <datalist id="imena">
+                % for row in users1:
+                      <option>{{row}}</option>
+                % end
+          </datalist>
+          <datalist id="priimki">
+                % for row in users2:
+                      <option>{{row}}</option>
+                % end
+          </datalist>
+
+
+
+        <button type="submit" value="isci", name="isci" style="float:right; width:100px;  8px;">Išči</button>
+        </div>
+        </form>
+
+			% if rows_tabela is not None:
+				<table class="w3-table-all" id="dataTable" width="100%" cellspacing="0">
+				  <thead>
+					<tr>
+                      <th>Ime</th>
+                      <th>Priimek</th>
+                      <th>Rojstvo</th>
+					  <th>Naslov</th>
+                      <th>Telefon</th>
+                      <th>Email</th>
+                      <th>Članarina</th>
+                      <th>Zaposlitev</th>
+                      <th>Funkcija</th>
+                      <th>Vod</th>
+					</tr>
+				  </thead>
+				  <tbody>
+				  % for row in rows_tabela:
+					<tr>
+					  %for col in row:
+						<td>{{col}}</td>
+					  %end
+					</tr>
+				  %end
+				 </tbody>
+                  %end
+                  </div>
+
+<!-- The ČLANARINA Section -->
+      <div class="w3-green" id="članarina">
+  <div class="w3-container w3-content w3-center w3-padding-64" >
+      <h2 class="w3-wide w3-center">OSEBE, KI ŠE NISO PLAČALE ČLANARINE</h2>
+
+        <table class="w3-table-alll" id="dataTable" width="100%" cellspacing="0">
+          <thead>
+            <tr>
+              <th>Ime</th>
+              <th>Priimek</th>
+              <th>Telefonska št</th>
+              <th>Email</th>
+              <th>Funkcija</th>
+            </tr>
+          </thead>
+          <tbody>
+          % for row in clanarina:
+            <tr>
+              %for col in row:
+                <td>{{col}}</td>
+              %end
+            </tr>
+          %end
+         </tbody>
+          </table>
+    </div>
+        </div>
+
+<!-- End Page Content -->
+</div>
+
+<script>
+function myMap() {
+  myCenter=new google.maps.LatLng(41.878114, -87.629798);
+  var mapOptions= {
+    center:myCenter,
+    zoom:12, scrollwheel: false, draggable: false,
+    mapTypeId:google.maps.MapTypeId.ROADMAP
+  };
+  var map=new google.maps.Map(document.getElementById("googleMap"),mapOptions);
+
+  var marker = new google.maps.Marker({
+    position: myCenter,
+  });
+  marker.setMap(map);
+}
+</script>
+<script>
+function prijavi() {
+    var ime = document.getElementById("name").value;
+    var priimek = document.getElementById("surname").value;
+    var datum = document.getElementById("date").value;
+    $.post("/indexstars/", {type: "prijavi"})
+    console.log(datum)
+}
+</script>
+
+
+<!-- Footer -->
+<footer class="w3-container w3-padding-64 w3-center w3-opacity w3-light-grey w3-xlarge">
+        <div class="text-center">
+         <small> <p>&copy; Copyright
+        <script language="JavaScript" type="text/javascript">
+            now = new Date
+            theYear=now.getYear()
+            if (theYear < 1900)
+            theYear=theYear+1900
+            document.write(theYear)
+        </script>
+         </small>
+        </div>
+    </footer>
+
+
+<script>
+
+// Used to toggle the menu on small screens when clicking on the menu button
+function myFunction() {
+    var x = document.getElementById("navDemo");
+    if (x.className.indexOf("w3-show") == -1) {
+        x.className += " w3-show";
+    } else {
+        x.className = x.className.replace(" w3-show", "");
+    }
+}
+
+// When the user clicks anywhere outside of the modal, close it
+var modal = document.getElementById('ticketModal');
+window.onclick = function(event) {
+  if (event.target == modal) {
+    modal.style.display = "none";
+  }
+}
+</script>
+
+<script>
+function autocomplete(inp, arr) {
+  /*the autocomplete function takes two arguments,
+  the text field element and an array of possible autocompleted values:*/
+  var currentFocus;
+  /*execute a function when someone writes in the text field:*/
+  inp.addEventListener("input", function(e) {
+      var a, b, i, val = this.value;
+      /*close any already open lists of autocompleted values*/
+      closeAllLists();
+      if (!val) { return false;}
+      currentFocus = -1;
+      /*create a DIV element that will contain the items (values):*/
+      a = document.createElement("DIV");
+      a.setAttribute("id", this.id + "autocomplete-list");
+      a.setAttribute("class", "autocomplete-items");
+      /*append the DIV element as a child of the autocomplete container:*/
+      this.parentNode.appendChild(a);
+      /*for each item in the array...*/
+      for (i = 0; i < arr.length; i++) {
+        /*check if the item starts with the same letters as the text field value:*/
+        if (arr[i].substr(0, val.length).toUpperCase() == val.toUpperCase()) {
+          /*create a DIV element for each matching element:*/
+          b = document.createElement("DIV");
+          /*make the matching letters bold:*/
+          b.innerHTML = "<strong>" + arr[i].substr(0, val.length) + "</strong>";
+          b.innerHTML += arr[i].substr(val.length);
+          /*insert a input field that will hold the current array item's value:*/
+          b.innerHTML += "<input type='hidden' value='" + arr[i] + "'>";
+          /*execute a function when someone clicks on the item value (DIV element):*/
+          b.addEventListener("click", function(e) {
+              /*insert the value for the autocomplete text field:*/
+              inp.value = this.getElementsByTagName("input")[0].value;
+              /*close the list of autocompleted values,
+              (or any other open lists of autocompleted values:*/
+              closeAllLists();
+          });
+          a.appendChild(b);
+        }
+      }
+  });
+  /*execute a function presses a key on the keyboard:*/
+  inp.addEventListener("keydown", function(e) {
+      var x = document.getElementById(this.id + "autocomplete-list");
+      if (x) x = x.getElementsByTagName("div");
+      if (e.keyCode == 40) {
+        /*If the arrow DOWN key is pressed,
+        increase the currentFocus variable:*/
+        currentFocus++;
+        /*and and make the current item more visible:*/
+        addActive(x);
+      } else if (e.keyCode == 38) { //up
+        /*If the arrow UP key is pressed,
+        decrease the currentFocus variable:*/
+        currentFocus--;
+        /*and and make the current item more visible:*/
+        addActive(x);
+      } else if (e.keyCode == 13) {
+        /*If the ENTER key is pressed, prevent the form from being submitted,*/
+        e.preventDefault();
+        if (currentFocus > -1) {
+          /*and simulate a click on the "active" item:*/
+          if (x) x[currentFocus].click();
+        }
+      }
+  });
+  function addActive(x) {
+    /*a function to classify an item as "active":*/
+    if (!x) return false;
+    /*start by removing the "active" class on all items:*/
+    removeActive(x);
+    if (currentFocus >= x.length) currentFocus = 0;
+    if (currentFocus < 0) currentFocus = (x.length - 1);
+    /*add class "autocomplete-active":*/
+    x[currentFocus].classList.add("autocomplete-active");
+  }
+  function removeActive(x) {
+    /*a function to remove the "active" class from all autocomplete items:*/
+    for (var i = 0; i < x.length; i++) {
+      x[i].classList.remove("autocomplete-active");
+    }
+  }
+  function closeAllLists(elmnt) {
+    /*close all autocomplete lists in the document,
+    except the one passed as an argument:*/
+    var x = document.getElementsByClassName("autocomplete-items");
+    for (var i = 0; i < x.length; i++) {
+      if (elmnt != x[i] && elmnt != inp) {
+        x[i].parentNode.removeChild(x[i]);
+      }
+    }
+  }
+  /*execute a function when someone clicks in the document:*/
+  document.addEventListener("click", function (e) {
+      closeAllLists(e.target);
+      });
+}
+
+/*An array containing all the country names in the world:*/
+
+var countries = ['Xavier', 'Charlotte', 'Jason', 'Xandra', 'Norman', 'Vera', 'Ursa', 'Kareem', 'Damon',
+'Jena', 'Blake', 'Portia', 'Calvin', 'Garrett', 'Trevor', 'Lara', 'Xander', 'Jade', 'Castor', 'Ramona',
+'Naida', 'Emmanuel', 'Dalton', 'Hyatt', 'Callum', 'Xyla', 'Kay', 'Rebecca', 'Hop', 'Shellie', 'Yeo', 'Coby',
+'Nora', 'Erasmus', 'Carson', 'Quyn', 'Charles', 'Savannah', 'Calvin', 'Faith', 'Ross', 'Kirestin', 'Zephr',
+'Travis', 'Adena', 'Maite', 'Chaney', 'Leila', 'John', 'Janna', 'August', 'Yasir', 'Eliana', 'Chancellor',
+'Micah', 'Patrick', 'Olympia', 'Kasimir', 'Marshall', 'Fletcher', 'Fritz', 'Vance', 'Byron', 'Adena',
+'Ursula', 'Evangeline', 'Cooper', 'Uta', 'Nero', 'Leah', 'Cameron', 'Mechelle', 'Brynn', 'Lance', 'Carson',
+'Levi', 'Blaine', 'Noel', 'Cynthia', 'Scott', 'Summer', 'Ray', 'Lawrence', 'James', 'Cara', 'Melissa',
+'Dorian', 'Selma', 'Carson', 'Inez', 'Hadley', 'Avye', 'Brynn', 'Ishmael', 'George', 'Bradley', 'Rooney',
+'Byron', 'Rebecca', 'Candice', 'sdffdds', 'Zajćek']
+var users1 = users1
+
+/*initiate the autocomplete function on the "myInput" element, and pass along the countries array as possible
+autocomplete values:*/
+autocomplete(document.getElementById("myInput"), countries);
+autocomplete(document.getElementById("myInput2"), users2);
+</script>
+
+
+
+</body>
+</html>

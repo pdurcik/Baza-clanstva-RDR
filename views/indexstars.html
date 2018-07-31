@@ -31,7 +31,7 @@ body {font-family: "Lato", sans-serif}
   <a href="#akcije" class="w3-bar-item w3-button w3-padding-large" onclick="myFunction()">AKCIJE</a>
   <a href="#clanarina" class="w3-bar-item w3-button w3-padding-large" onclick="myFunction()">ČLANARINA</a>
   <a href="#vpis" class="w3-bar-item w3-button w3-padding-large">VPIS</a>
-  <a href="#kontakt" class="w3-bar-item w3-button w3-padding-large" onclick="myFunction()">ČLANARINA</a>
+  <a href="#kontakt" class="w3-bar-item w3-button w3-padding-large" onclick="myFunction()">KONTAKT</a>
 </div>
 
 <!-- Page content -->
@@ -59,13 +59,10 @@ body {font-family: "Lato", sans-serif}
                 % if prijavljeni_na_akcije[stevec] == []:
                     Otrok ni vpisan v nobeno akcijo.
                 % end
-                %print (prijavljeni_na_akcije[stevec])
                 %for j in prijavljeni_na_akcije[stevec]:
 
-                    %print(j[0])
                     %st = 0
                     %for k in akcije:
-                        %print(k)
                         %if k['id']==j[0]:
                             {{akcije[st]['ime']}}
                         %end
@@ -192,7 +189,7 @@ body {font-family: "Lato", sans-serif}
     %end
     %if nep == 0:
       <p>Članarina je plačana!</p>
-
+      %end
 
   </div>
 

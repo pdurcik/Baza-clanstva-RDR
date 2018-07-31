@@ -43,31 +43,28 @@ top:46px">
 
   <!-- Image - treba popravit!!! -->
   <div class="w3-container w3-content w3-center w3-padding-64" style="max-width:800px">
-    <p class="w3-justify">Pozdravljeni! Prijavljeni ste kot admin. Na tej strani lahko urejate naslednje
-stvari: bla bla bla</p>
+    <p class="w3-justify">Pozdravljeni! Prijavljeni ste kot admin. Na tej strani lahko dodajate in brišete člane,
+        spreminjate funkcije članov, dodajate in brišete akcije in vode, iščete osebe in pregledate, kateri otroci
+        še nimajo plačane članarine</p>
     </div>
     <div class="w3-row w3-padding-32">
 
   <!-- The ČLANI Section -->
       <div class="w3-green" id="člani">
   <div class="w3-container w3-content w3-center w3-padding-64"   >
-    <div id="briši">
+
     <h2 class="w3-wide">DODAJ/IZBRIŠI ČLANA</h2>
     <p><font color="white"><b>Dodaj člana</b></font></p>
     <form action="." role="form" method="post" class="form">
       <label><i class="add">Vnesite podatke novega člana</i></label>
 			<div class="container">
 
-				<input type="name" class="form-control" placeholder="ime" name="name"
-id="name" required>
-                <input type="surname" class="form-control" placeholder="priimek" name="surname" id="surname"
-required>
-                <input type="date" class="form-control" placeholder="datum rojstva"  name="date" id="date"
-required>
-              <input type="address" class="form-control" placeholder="naslov"  name="address" id="address"
-required>
+				<input type="name" class="form-control" placeholder="ime" name="name" id="name" required>
+                <input type="surname" class="form-control" placeholder="priimek" name="surname" id="surname" required>
+                <input type="date" class="form-control" placeholder="datum rojstva"  name="date" id="date" required>
+              <input type="address" class="form-control" placeholder="naslov"  name="address" id="address" required>
               <input type="email" class="form-control" placeholder="emal"  name="email" id="email">
-              <form action=".">
+              <!--<form action=".">-->
                   <select name="funkcija">
                     <option value="otrok">otrok</option>
                     <option value="starš">starš</option>
@@ -83,8 +80,7 @@ required>
                   <!--<input type="submit" placeholder="kaj dela?"  class="form-control" required>-->
 
               <input type="tel" class="form-control" placeholder="telefon"  name="telefon" id="telefon">
-              <input type="text" class="form-control" placeholder="zaposlitev"  name="zaposlitev"
-id="zaposlitev">
+              <input type="text" class="form-control" placeholder="zaposlitev"  name="zaposlitev" id="zaposlitev">
 
                   <select name="vod">
                     <option value="" selected>vod</option>
@@ -93,12 +89,16 @@ id="zaposlitev">
 
                       % end
                   </select>
-                  <!--<input type="submit" placeholder="kaj dela?"  class="form-control" required>-->
-                </form>
+                <!--</form>-->
 
 				<button type="submit" value="dodajclan", name="dodajclan" style="float:right;
 width:100px; margin-top: 8px;">Dodaj</button>
 			</div>
+                           	  <h5>
+                %if napaka4 is not None:
+                    {{napaka4}}
+                %end
+              </h5>
      </form>
     <br>
 
@@ -107,51 +107,42 @@ width:100px; margin-top: 8px;">Dodaj</button>
       <label><i class="add">Vnesite podatke člana, ki ga želite izbrisati</i></label>
 			<div class="container">
 
-				<input type="name" class="form-control" placeholder="ime" name="name"
-id="name" required>
-                <input type="surname" class="form-control" placeholder="priimek" name="surname" id="surname"
-required>
-                <input type="date" class="form-control" placeholder="datum rojstva"  name="date" id="date"
-required>
-              <input type="address" class="form-control" placeholder="naslov"  name="address" id="address"
-required>
+				<input type="name" class="form-control" placeholder="ime" name="name" id="name" required>
+                <input type="surname" class="form-control" placeholder="priimek" name="surname" id="surname" required>
+                <input type="date" class="form-control" placeholder="datum rojstva"  name="date" id="date" required>
+              <input type="address" class="form-control" placeholder="naslov"  name="address" id="address" required>
 
               <br>
-				<button type="submit" value="izbrisiclan", name="izbrisiclan"
-style="float:right; width:100px; margin-top: 8px;">Izbriši</button>
+				<button type="submit" value="izbrisiclan", name="izbrisiclan" style="float:right; width:100px; margin-top: 8px;">Izbriši</button>
 			<div class="custom-select" style="width:200px;">
           </div>
             </div>
+                  	  <h5>
+                %if napaka5 is not None:
+                    {{napaka5}}
+                %end
+              </h5>
      </form>
-        </div>
+
     <br><br><br><br>
     <h2 class="w3-wide">USTVARI RELACIJO STARŠ-OTROK</h2>
-   <label>Dodajte staršu otroka, da ga bo lahko prijavil na akcijo. Pozor: obe osebi morata biti vpisani!
-<label>
+   <label>Dodajte staršu otroka, da ga bo lahko prijavil na akcijo. Pozor: obe osebi morata biti vpisani!</label>
+
         <form action="." role="form" method="post" class="form">
 			<div class="container">
 
-				<input type="name" class="form-control" placeholder="ime starša"
-name="namestars" id="name" required>
-                <input type="surname" class="form-control" placeholder="priimek starša" name="surnamestars"
-id="surname" required>
-                <input type="date" class="form-control" placeholder="datum rojstva starša"  name="datestars"
-id="date" required>
-              <input type="address" class="form-control" placeholder="naslov starša"  name="addressstars"
-id="address" required>
+				<input type="name" class="form-control" placeholder="ime starša" name="namestars" id="name" required>
+                <input type="surname" class="form-control" placeholder="priimek starša" name="surnamestars" id="surname" required>
+                <input type="date" class="form-control" placeholder="datum rojstva starša"  name="datestars" id="date" required>
+              <input type="address" class="form-control" placeholder="naslov starša"  name="addressstars" id="address" required>
 
               <br>
-                <input type="name" class="form-control" placeholder="ime otroka" name="nameotrok" id="name"
-required>
-                <input type="surname" class="form-control" placeholder="priimek otroka" name="surnameotrok"
-id="surname" required>
-                <input type="date" class="form-control" placeholder="datum rojstva otroka"  name="dateotrok"
-id="date" required>
-              <input type="address" class="form-control" placeholder="naslov otroka"  name="addressotrok"
-id="address" required>
+                <input type="name" class="form-control" placeholder="ime otroka" name="nameotrok" id="name" required>
+                <input type="surname" class="form-control" placeholder="priimek otroka" name="surnameotrok" id="surname" required>
+                <input type="date" class="form-control" placeholder="datum rojstva otroka"  name="dateotrok" id="date" required>
+              <input type="address" class="form-control" placeholder="naslov otroka"  name="addressotrok" id="address" required>
               <br>
-				<button type="submit" value="starsotrok", name="starsotrok"
-style="float:right; width:100px; margin-top: 8px;">Potrdi</button>
+				<button type="submit" value="starsotrok", name="starsotrok" style="float:right; width:100px; margin-top: 8px;">Potrdi</button>
 			<div class="custom-select" style="width:200px;">
           </div>
             </div>
@@ -170,29 +161,17 @@ style="float:right; width:100px; margin-top: 8px;">Potrdi</button>
 
              <form action="." role="form" method="post" class="form">
 			<div class="container">
-                 <input type="name" class="form-control" placeholder="ime" name="nameotrok" id="name"
-required>
-                <input type="surname" class="form-control" placeholder="priimek" name="surnameotrok"
-id="surname" required>
-                <input type="date" class="form-control" placeholder="datum rojstva"  name="dateotrok"
-id="date" required>
-              <input type="address" class="form-control" placeholder="naslov"  name="addressotrok"
-id="address" required>
-              <input type="function" class="form-control" placeholder="nova funkcija"  name="function"
-id="function" required>
+                 <input type="text" class="form-control" placeholder="ime" name="namefn" id="name" required>
+                <input type="text" class="form-control" placeholder="priimek" name="surnamefn" id="surname" required>
+                <input type="date" class="form-control" placeholder="datum rojstva"  name="datefn" id="date" required>
+              <input type="text" class="form-control" placeholder="naslov"  name="addressfn" id="address" required>
+              <input type="text" class="form-control" placeholder="nova funkcija"  name="function" id="function" required>
               <br>
 				<button type="submit" value="funkcija", name="funkcija" style="float:right;
 width:100px; margin-top: 8px;">Spremeni</button>
 			<div class="custom-select" style="width:200px;">
           </div>
             </div>
-
-          	  <h5>
-                %if napaka is not None:
-                    {{napaka}}
-                %end
-              </h5>
-
 
      </form>
 
@@ -227,14 +206,10 @@ width:100px; margin-top: 8px;">Spremeni</button>
        <form action="." role="form" method="post" class="form" id="usrform">
           <div class="container w3-center">
 
-              <input type="name" class="form-control" placeholder="ime akcije" name="nameakc1" id="nameakc1"
-required>
-
-              <input type="date" class="form-control" placeholder="datum"  name="dateakc1" id="dateakc1"
-required>
+              <input type="name" class="form-control" placeholder="ime akcije" name="nameakc1" id="nameakc1" required>
+              <input type="date" class="form-control" placeholder="datum"  name="dateakc1" id="dateakc1" required>
             <input type="text" class="form-control" placeholder="trajanje"  name="time" id="time" required>
-            <input type="number" class="form-control" placeholder="id organizatorja"  name="organizator"
-id="organizator" required>
+            <input type="number" class="form-control" placeholder="id organizatorja"  name="organizator" id="organizator" required>
               <textarea rows="2" cols="35" name="comment" id="comment" form_id="usrform">opis</textarea>
 
             <br>
@@ -276,6 +251,7 @@ width:100px; margin-top: 8px;">Izbriši</button>
         <table class="w3-table-alll" id="dataTable" width="100%" cellspacing="0">
           <thead>
             <tr>
+                <th>ID</th>
               <th>Ime</th>
               <th>Starost</th>
               <th>Termin</th>
@@ -336,7 +312,7 @@ margin-top: 8px;">Izbriši</button>
     </div>
 
 
-      <!-- The Vpis Section -->
+      <!-- The IŠČI Section -->
   <div class="w3-container w3-content w3-padding-64 w3-center" id="išči">
     <h2 class="w3-wide w3-center">IŠČI</h2>
     <p class="w3-center">Izberite akcijo oziroma vod in izpisali se vam bodo podatki oseb, ki sodelujejo.</p>
@@ -489,13 +465,14 @@ width:100px; margin-top: 8px;">Izpiši</button>
 					</tr>
 				  %end
 				 </tbody>
+                    </table>
                   %end
                   </div>
 
 <!-- The ČLANARINA Section -->
       <div class="w3-green" id="članarina">
   <div class="w3-container w3-content w3-center w3-padding-64" >
-      <h2 class="w3-wide w3-center">OSEBE, KI ŠE NISO PLAČALE ČLANARINE</h2>
+      <h2 class="w3-wide w3-center">OTROCI, KI ŠE NISO PLAČALE ČLANARINE</h2>
 
         <table class="w3-table-alll" id="dataTable" width="100%" cellspacing="0">
           <thead>

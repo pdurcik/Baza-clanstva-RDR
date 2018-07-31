@@ -6,7 +6,7 @@ import hashlib # računanje MD5 kriptografski hash za gesla
 from datetime import datetime
 
 # uvozimo ustrezne podatke za povezavo
-import auth as auth
+import auth_public as auth
 
 # uvozimo psycopg2
 import psycopg2, psycopg2.extensions, psycopg2.extras

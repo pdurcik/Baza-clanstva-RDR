@@ -276,8 +276,7 @@ def nov_zahtevek():
                     [prijavljen, akcije[-1]])
         tmp = cur.fetchall()
         if tmp == []:
-            c.execute("""
-                         INSERT INTO udelezenec (oseba, akcija)
+            c.execute("""INSERT INTO udelezenec (oseba, akcija)
                          VALUES (%s,%s) """,
                           [prijavljen, akcije[-1]])
 

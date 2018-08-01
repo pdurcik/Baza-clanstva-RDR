@@ -32,29 +32,21 @@ body {font-family: "Lato", sans-serif}
 
 <!-- Page content -->
 <div class="w3-content" style="max-width:2000px;margin-top:46px">
-
-  <!-- Image - treba popravit!!! -->
-    <img src="RDRgrb.jpg" style="width:40%">
+<style>
+img {
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+}
+</style>
+  <!-- Image -->
+  <img src="/static/img/RDRgrb.jpg" style="width:30%" class="center">
 
   <!-- The RDR Section -->
   <div class="w3-container w3-content w3-center w3-padding-64" style="max-width:800px" id="rdr">
     <h2 class="w3-wide">ROD DVEH REK</h2>
     <p class="w3-opacity"><i>Z naravo k boljšemu človeku!</i></p>
     <p class="w3-justify">Spletna stran za urejanje podatkov in prijave na akcije!</p>
-    <!--<div class="w3-row w3-padding-32">-->
-      <!--<div class="w3-third">-->
-        <!--<p>Name</p>-->
-        <!--<img src="/w3images/bandmember.jpg" class="w3-round w3-margin-bottom" alt="Random Name" style="width:60%">-->
-      <!--</div>-->
-      <!--<div class="w3-third">-->
-        <!--<p>Name</p>-->
-        <!--<img src="/w3images/bandmember.jpg" class="w3-round w3-margin-bottom" alt="Random Name" style="width:60%">-->
-      <!--</div>-->
-      <!--<div class="w3-third">-->
-        <!--<p>Name</p>-->
-        <!--<img src="/w3images/bandmember.jpg" class="w3-round" alt="Random Name" style="width:60%">-->
-      <!--</div>-->
-    <!--</div>-->
   </div>
 
   <!-- The akcije Section -->
@@ -74,13 +66,8 @@ body {font-family: "Lato", sans-serif}
 
             <p class="w3-opacity">{{akcije[-3][2]}}</p>
             <p>{{akcije[-3]['opis']}}</p>
-
-
           </div>
           </div>
-
-
-
 
         <div class="w3-third w3-margin-bottom">
           <img src="/w3images/paris.jpg" alt="Akcija2" style="width:100%" class="w3-hover-opacity">

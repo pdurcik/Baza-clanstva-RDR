@@ -64,57 +64,57 @@ width:100px; margin-top: 8px;">Dodaj</button>
     <br>
 
         <p><font color="white"><b>Izbriši člana</b></font></p>
-    <form action="." role="form" method="post" class="form">
-      <label><i class="add">Vnesite podatke člana, ki ga želite izbrisati</i></label>
+
+      <form action="." role="form" method="post" class="form">
 			<div class="container">
 
-				<input type="name" class="form-control" placeholder="ime" name="name" id="name" required>
-                <input type="surname" class="form-control" placeholder="priimek" name="surname" id="surname" required>
-                <input type="date" class="form-control" placeholder="datum rojstva"  name="date" id="date" required>
-              <input type="address" class="form-control" placeholder="naslov"  name="address" id="address" required>
+              <form action=".">
+                  <select name="izbrisimemberid">
+                    <option value="" selected>ime priimek, naslov, datum rojstva, ID</option>
+                     % for row in izbrisani:
 
-              <br>
-				<button type="submit" value="izbrisiclan"  name="izbrisiclan" style="float:right; width:100px; margin-top: 8px;">Izbriši</button>
-			<div class="custom-select" style="width:200px;">
-          </div>
-            </div>
-                  	  <h5>
-                %if napaka5 is not None:
-                    {{napaka5}}
-                %end
-              </h5>
+                            <option value="{{row[4]}}">{{row[0]}} {{row[1]}}, {{row[2]}}, {{row[3]}}, {{row[4]}}</option>
+
+                      % end
+                  </select>
+                </form>
+				<button type="submit" value="izbrisimemberid" name="izbrisimember" style="float:right;
+width:100px; margin-top: 8px;">Izbriši</button>
+			</div>
      </form>
 
     <br><br><br><br>
     <h2 class="w3-wide">USTVARI RELACIJO STARŠ-OTROK</h2>
-   <label>Dodajte staršu otroka, da ga bo lahko prijavil na akcijo. Pozor: obe osebi morata biti vpisani!</label>
-
-        <form action="." role="form" method="post" class="form">
+   <label>Dodajte staršu otroka, da ga bo lahko prijavil na akcijo.</label>
+            <form action="." role="form" method="post" class="form">
 			<div class="container">
 
-				<input type="name" class="form-control" placeholder="ime starša" name="namestars" id="name" required>
-                <input type="surname" class="form-control" placeholder="priimek starša" name="surnamestars" id="surname" required>
-                <input type="date" class="form-control" placeholder="datum rojstva starša"  name="datestars" id="date" required>
-              <input type="address" class="form-control" placeholder="naslov starša"  name="addressstars" id="address" required>
+              <form action=".">
 
-              <br>
-                <input type="name" class="form-control" placeholder="ime otroka" name="nameotrok" id="name" required>
-                <input type="surname" class="form-control" placeholder="priimek otroka" name="surnameotrok" id="surname" required>
-                <input type="date" class="form-control" placeholder="datum rojstva otroka"  name="dateotrok" id="date" required>
-              <input type="address" class="form-control" placeholder="naslov otroka"  name="addressotrok" id="address" required>
-              <br>
-				<button type="submit" value="starsotrok", name="starsotrok" style="float:right; width:100px; margin-top: 8px;">Potrdi</button>
-			<div class="custom-select" style="width:200px;">
+                  <select name="relacijastarsid">
+                    <option value="" selected>STARŠ: ime priimek, naslov, datum rojstva, ID</option>
+                     % for row in parents:
+
+                            <option value="{{row[4]}}">{{row[0]}} {{row[1]}}, {{row[2]}}, {{row[3]}}, {{row[4]}}</option>
+
+                      % end
+                  </select>
+                    <br>
+                  <select name="relacijaotrokid">
+                    <option value="" selected>OTROK: ime priimek, naslov, datum rojstva, ID</option>
+                     % for row in children:
+
+                            <option value="{{row[4]}}">{{row[0]}} {{row[1]}}, {{row[2]}}, {{row[3]}}, {{row[4]}}</option>
+
+                      % end
+                  </select>
+                </form>
+                <br>
+				<button type="submit" value="relacijaotrokid" name="relacija" style="float:right;
+width:100px; margin-top: 8px;">Potrdi</button>
+        <div class="custom-select" style="width:200px;">
           </div>
-            </div>
-
-          	  <h5>
-                %if napaka is not None:
-                    {{napaka}}
-                %end
-              </h5>
-
-
+			</div>
      </form>
      <br>
      <br>
@@ -122,13 +122,31 @@ width:100px; margin-top: 8px;">Dodaj</button>
 
              <form action="." role="form" method="post" class="form">
 			<div class="container">
-                 <input type="text" class="form-control" placeholder="ime" name="namefn" id="name" required>
-                <input type="text" class="form-control" placeholder="priimek" name="surnamefn" id="surname" required>
-                <input type="date" class="form-control" placeholder="datum rojstva"  name="datefn" id="date" required>
-              <input type="text" class="form-control" placeholder="naslov"  name="addressfn" id="address" required>
-              <input type="text" class="form-control" placeholder="nova funkcija"  name="function" id="function" required>
-              <br>
-				<button type="submit" value="funkcija"  name="funkcija" style="float:right;
+
+                    <form action=".">
+                  <select name="funkcijaosebaid">
+                    <option value="" selected>ime priimek, naslov, datum rojstva, ID</option>
+                     % for row in izbrisani:
+
+                            <option value="{{row[4]}}">{{row[0]}} {{row[1]}}, {{row[2]}}, {{row[3]}}, {{row[4]}}</option>
+
+                      % end
+                  </select>
+
+                  <select name="funkcija2">
+                    <option value="otrok">otrok</option>
+                    <option value="starš">starš</option>
+                    <option value="blagajnik">blagajnik</option>
+                    <option value="gospodar">gospodar</option>
+                    <option value="GG načelnik">GG načelnik</option>
+                    <option value="MČ načelnik">MČ načelnik</option>
+                    <option value="PP načelnik">PP načelnik</option>
+                    <option value="RR načelnik">RR načelnik</option>
+                    <option value="starešina">starešina</option>
+                    <option value="tajnik">tajnik</option>
+                  </select>
+              </form>
+				<button type="submit" value="funkcija2"  name="function" style="float:right;
 width:100px; margin-top: 8px;">Spremeni</button>
 			<div class="custom-select" style="width:200px;">
           </div>
@@ -146,6 +164,7 @@ width:100px; margin-top: 8px;">Spremeni</button>
         <table class="w3-table-all" id="dataTable" width="100%" cellspacing="0">
           <thead>
             <tr>
+                <th>ID</th>
               <th>Ime</th>
               <th>Datum</th>
               <th>Trajanje</th>
@@ -188,17 +207,23 @@ margin-top: 8px;">Dodaj</button>
       <br>
       <br>
       <p><font color="black"><b>Izbriši akcijo</b></font></p>
-       <form action="." role="form" method="post" class="form">
-        <div class="container w3-center">
-              <input type="name" class="form-control" placeholder="ime akcije" name="name" id="name" required>
-              <input type="date" class="form-control" placeholder="datum"  name="date" id="date" required>
-            <br>
-              <button type="submit" value="izbrisiakcijo", name="izbrisiakcijo" style="float:right;
+      <form action="." role="form" method="post" class="form">
+			<div class="container">
+
+              <form action=".">
+                  <select name="izbrisiakcijaid">
+                    <option value="" selected>ime akcije, ID</option>
+                     % for row in akcije_vse:
+
+                            <option value="{{row[0]}}">{{row[1]}}, {{row[0]}}</option>
+
+                      % end
+                  </select>
+                </form>
+				<button type="submit" value="izbrisiakcijaid" name="izbrisiakcijo" style="float:right;
 width:100px; margin-top: 8px;">Izbriši</button>
-          <div class="custom-select" style="width:200px;">
-        </div>
-      </div>
-       </form>
+			</div>
+     </form>
 
     </div>
 
@@ -259,16 +284,23 @@ margin-top: 8px;">Dodaj</button>
       <br>
       <br>
       <p><b>Izbriši vod</b></p>
-       <form action="." role="form" method="post" class="form">
-        <div class="container w3-center">
-              <input type="name" class="form-control" placeholder="ime voda" name="name" id="name" required>
-            <br>
-              <button type="submit" value="izbrisivod"  name="izbrisivod" style="float:right; width:100px;
-margin-top: 8px;">Izbriši</button>
-          <div class="custom-select" style="width:200px;">
-        </div>
-      </div>
-       </form>
+      <form action="." role="form" method="post" class="form">
+			<div class="container">
+
+              <form action=".">
+                  <select name="izbrisivodid">
+                    <option value="" selected>ime voda, ID</option>
+                     % for row in vodi_vse:
+
+                            <option value="{{row[0]}}">{{row[1]}}, {{row[0]}}</option>
+
+                      % end
+                  </select>
+                </form>
+				<button type="submit" value="izbrisivodid" name="izbrisivod" style="float:right;
+width:100px; margin-top: 8px;">Izbriši</button>
+			</div>
+     </form>
       </div>
     </div>
 

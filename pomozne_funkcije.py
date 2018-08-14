@@ -56,10 +56,7 @@ conn = psycopg2.connect(database=auth.db, host=auth.host, user=auth.user, passwo
 cur = conn.cursor(cursor_factory=psycopg2.extras.DictCursor)
 
 def dodaj_stolpec(table, stolpec, datatype):
-    cur.execute("""
-            ALTER TABLE %s
-            ADD %s %s;
-        """ % (table, stolpec, datatype))
+    cur.execute("""ALTER TABLE %s ADD %s %s;""", [table, stolpec, datatype])
     conn.commit()
 
 

@@ -273,22 +273,32 @@ def index_admin():
     tmp = c.fetchall()
     tmpime = [x[1] for x in tmp]
 
-    c.execute("""SELECT ime, datum, trajanje FROM akcija""")
+    c.execute("""SELECT id, ime, datum, trajanje FROM akcija""")
     tmp0 = c.fetchall()
-    tmp0ime = [x[0] for x in tmp0]
+    tmp0ime = [x[1] for x in tmp0]
 
-    c.execute("""SELECT ime,priimek FROM oseba""")
+    c.execute("""SELECT id, ime, priimek, naslov, rojstvo, funkcija FROM oseba""")
     tmp1 = c.fetchall()
-    imena = [x[0] for x in tmp1]
-    priimki = [x[1] for x in tmp1]
+    imena = [x[1] for x in tmp1]
+    priimki = [x[2] for x in tmp1]
+    otroci = [(x[1], x[2], x[3], x[4], x[0]) for x in tmp1 if x[5]=='otrok']
+    starsi = [(x[1], x[2], x[3], x[4], x[0]) for x in tmp1 if x[5]=='starš']
 
     c.execute("""SELECT ime,priimek, telefon, mail, funkcija FROM oseba WHERE clanarina=0 AND funkcija='otrok' ORDER BY ime ASC""")
     tmp2 = c.fetchall()
 
+    c.execute("""SELECT oseba.ime, oseba.priimek, oseba.naslov, oseba.rojstvo, oseba.id FROM oseba LEFT JOIN vod
+            ON oseba.id = vod.vodnik LEFT JOIN akcija ON oseba.id = akcija.organizator WHERE vod.id IS NULL AND akcija.id IS NULL ORDER BY oseba.ime ASC""")
+    izbrisi = c.fetchall()
+    # for row in izbrisani:
+    #     print(row[4])
+
+
+
     return bottle.template('indexadmin.html', rows_vod=tmpime, rows_akcija=tmp0ime, users1=imena,
                            users2=priimki, rows_tabela=None, vod_tabela=None, akcija_tabela=None,
                            napaka=None, skupna_tabela=None, akcije_vse=tmp0, napaka2=None, napaka3=None,
-                           vodi_vse=tmp, clanarina=tmp2, napaka4=None, napaka5=None)
+                           vodi_vse=tmp, clanarina=tmp2, napaka4=None, napaka5=None, izbrisani=izbrisi, parents=starsi, children=otroci)
 
 @bottle.post("/indexadmin/")
 def index_admin_post():
@@ -298,18 +308,24 @@ def index_admin_post():
     tmpime = [x[1] for x in tmp]
 
 
-    c.execute("""SELECT ime, datum, trajanje FROM akcija""")
+    c.execute("""SELECT id, ime, datum, trajanje FROM akcija""")
     tmp0 = c.fetchall()
-    tmp0ime = [x[0] for x in tmp0]
+    tmp0ime = [x[1] for x in tmp0]
 
-    c.execute("""SELECT ime, priimek, id FROM oseba""")
+    c.execute("""SELECT id, ime, priimek, naslov, rojstvo, funkcija FROM oseba""")
     tmp1 = c.fetchall()
-    imena = [x[0] for x in tmp1]
-    priimki = [x[1] for x in tmp1]
-    idji = [x[2] for x in tmp1]
+    imena = [x[1] for x in tmp1]
+    priimki = [x[2] for x in tmp1]
+    idji = [x[0] for x in tmp1]
+    otroci = [(x[1], x[2], x[3], x[4], x[0]) for x in tmp1 if x[5]=='otrok']
+    starsi = [(x[1], x[2], x[3], x[4], x[0]) for x in tmp1 if x[5]=='starš']
 
     c.execute("""SELECT ime,priimek, telefon, mail, funkcija FROM oseba WHERE clanarina=0 AND funkcija='otrok' ORDER BY ime ASC""")
     tmp2 = c.fetchall()
+
+    c.execute("""SELECT oseba.ime, oseba.priimek, oseba.naslov, oseba.rojstvo, oseba.id FROM oseba LEFT JOIN vod
+            ON oseba.id = vod.vodnik LEFT JOIN akcija ON oseba.id = akcija.organizator WHERE vod.id IS NULL AND akcija.id IS NULL ORDER BY oseba.ime ASC""")
+    izbrisi = c.fetchall()
 
     if bottle.request.POST.get('dodajclan'): #argument je ime gumba!!!
 
@@ -332,132 +348,66 @@ def index_admin_post():
                                    users2=priimki, rows_tabela=None, vod_tabela=None, akcija_tabela=None,
                                    napaka=None, skupna_tabela=None, akcije_vse=tmp0,
                                    napaka2=None, napaka3=None, vodi_vse=tmp, clanarina=tmp2,
-                                   napaka4='Napaka: samo otrokom lahko določimo vod!', napaka5=None)
+                                   napaka4='Napaka: samo otrokom lahko določimo vod!', napaka5=None, izbrisani=izbrisi, parents=starsi, children=otroci)
         if bottle.request.forms.funkcija == 'starš' and bottle.request.forms.email == '':
             return bottle.template('indexadmin.html', rows_vod=tmpime, rows_akcija=tmp0ime, users1=imena,
                                    users2=priimki, rows_tabela=None, vod_tabela=None, akcija_tabela=None,
                                    napaka=None, skupna_tabela=None, akcije_vse=tmp0,
                                    napaka2=None, napaka3=None, vodi_vse=tmp, clanarina=tmp2,
-                                   napaka4='Napaka: starši morajo imeti email!', napaka5=None)
+                                   napaka4='Napaka: starši morajo imeti email!', napaka5=None, izbrisani=izbrisi, parents=starsi, children=otroci)
 
         c.execute("""INSERT INTO oseba (ime, priimek, rojstvo, naslov, telefon, mail, clanarina,
                                     zaposlitev, funkcija, vod) VALUES (%s, %s, %s, %s, %s, %s, %s, 
                                     %s, %s, %s)""", (vrednosti))
 
-
-    if bottle.request.POST.get('izbrisiclan'):  # argument je ime gumba!!!
-
-        c.execute("""SELECT id FROM oseba WHERE ime=%s AND priimek=%s AND rojstvo=%s AND naslov=%s""",
-                  [bottle.request.forms.name, bottle.request.forms.surname, bottle.request.forms.date,
-                   bottle.request.forms.address])
-        izbrisaniid = c.fetchall()
-        if izbrisaniid== []:
-            return bottle.template('indexadmin.html', rows_vod=tmpime, rows_akcija=tmp0ime, users1=imena,
-                                   users2=priimki, rows_tabela=None, vod_tabela=None, akcija_tabela=None,
-                                   napaka=None, skupna_tabela=None, akcije_vse=tmp0,
-                                   napaka2=None, napaka3=None, vodi_vse=tmp, clanarina=tmp2, napaka4=None,
-                                   napaka5='Napaka: osebe ni v bazi!')
+    if bottle.request.POST.get('izbrisimember'):  # argument je ime gumba!!!
+        print('hahaha')
+        print(bottle.request.forms.izbrisimemberid)
 
 
+    #  TO BOŠ ODSTRANU!!!!! OZIROMA SPREMENU, KOT PIŠE V TOĆKI 13 (V ZADNJI TOČKI)
 
-        c.execute("""SELECT * FROM akcija WHERE organizator=%s""", [izbrisaniid[0][0]])
-        je_organizator = c.fetchall()
-
-        if je_organizator != []:
-            return bottle.template('indexadmin.html', rows_vod=tmpime, rows_akcija=tmp0ime, users1=imena,
-                                   users2=priimki, rows_tabela=None, vod_tabela=None, akcija_tabela=None,
-                                   napaka=None, skupna_tabela=None, akcije_vse=tmp0,
-                                   napaka2=None, napaka3=None, vodi_vse=tmp, clanarina=tmp2, napaka4=None,
-                                   napaka5='Napaka: oseba je organizator akcije!')
-
-        c.execute("""SELECT * FROM vod WHERE vodnik=%s""", [izbrisaniid[0][0]])
-        je_vodnik = c.fetchall()
-
-        if je_vodnik != []:
-            return bottle.template('indexadmin.html', rows_vod=tmpime, rows_akcija=tmp0ime, users1=imena,
-                                   users2=priimki, rows_tabela=None, vod_tabela=None, akcija_tabela=None,
-                                   napaka=None, skupna_tabela=None, akcije_vse=tmp0,
-                                   napaka2=None, napaka3=None, vodi_vse=tmp, clanarina=tmp2, napaka4=None,
-                                   napaka5='Napaka: oseba je vodnik!')
-
-        c.execute("""DELETE FROM prostovoljec WHERE oseba=%s""",
-                  [izbrisaniid[0][0]])
-        c.execute("""DELETE FROM udelezenec WHERE oseba=%s""",
-                  [izbrisaniid[0][0]])
-        c.execute("""DELETE FROM uporabnik WHERE idoseba=%s""",
-                  [izbrisaniid[0][0]])
-        c.execute("""DELETE FROM otroci WHERE stars=%s""",
-                  [izbrisaniid[0][0]])
-        c.execute("""DELETE FROM otroci WHERE otrok=%s""",
-                  [izbrisaniid[0][0]])
+    # if bottle.request.POST.get('izbrisiclan'):  # argument je ime gumba!!!
+    #
+    #     c.execute("""SELECT id FROM oseba WHERE ime=%s AND priimek=%s AND rojstvo=%s AND naslov=%s""",
+    #               [bottle.request.forms.name, bottle.request.forms.surname, bottle.request.forms.date,
+    #                bottle.request.forms.address])
+    #     izbrisaniid = c.fetchall()
+    #
+    #     c.execute("""DELETE FROM prostovoljec WHERE oseba=%s""",
+    #               [izbrisaniid[0][0]])
+    #     c.execute("""DELETE FROM udelezenec WHERE oseba=%s""",
+    #               [izbrisaniid[0][0]])
+    #     c.execute("""DELETE FROM uporabnik WHERE idoseba=%s""",
+    #               [izbrisaniid[0][0]])
+    #     c.execute("""DELETE FROM otroci WHERE stars=%s""",
+    #               [izbrisaniid[0][0]])
+    #     c.execute("""DELETE FROM otroci WHERE otrok=%s""",
+    #               [izbrisaniid[0][0]])
+    #
+    #
+    #     c.execute("""DELETE FROM oseba WHERE ime=%s AND priimek=%s AND rojstvo=%s AND naslov=%s""",
+    #               [bottle.request.forms.name, bottle.request.forms.surname, bottle.request.forms.date,
+    #                bottle.request.forms.address])
 
 
-        c.execute("""DELETE FROM oseba WHERE ime=%s AND priimek=%s AND rojstvo=%s AND naslov=%s""",
-                  [bottle.request.forms.name, bottle.request.forms.surname, bottle.request.forms.date,
-                   bottle.request.forms.address])
-
-    if bottle.request.POST.get('starsotrok'):  # argument je ime gumba!!!
-        stars = [bottle.request.forms.namestars, bottle.request.forms.surnamestars, bottle.request.forms.datestars,
-                   bottle.request.forms.addressstars]
-        otrok = [bottle.request.forms.nameotrok, bottle.request.forms.surnameotrok, bottle.request.forms.dateotrok,
-                 bottle.request.forms.addressotrok]
-
-        c.execute("""SELECT id,funkcija FROM oseba
-                        WHERE ime=%s AND priimek=%s AND rojstvo=%s AND naslov=%s""",
-                    stars)
-        tmpstars = c.fetchall()
-
-        c.execute("""SELECT id,funkcija FROM oseba
-                        WHERE ime=%s AND priimek=%s AND rojstvo=%s AND naslov=%s""",
-                    otrok)
-
-        tmpotrok = c.fetchall()
-
-        if tmpstars == []:
-            return bottle.template('indexadmin.html', rows_vod=tmpime, rows_akcija=tmp0ime, users1=imena,
-                                   users2=priimki, rows_tabela=None, vod_tabela=None, akcija_tabela=None,
-                                   napaka='Napaka: starša ni v bazi!', skupna_tabela=None, akcije_vse=tmp0,
-                                   napaka2=None, napaka3=None, vodi_vse=tmp, clanarina=tmp2, napaka4=None, napaka5=None)
-
-        if tmpotrok == []:
-            return bottle.template('indexadmin.html', rows_vod=tmpime, rows_akcija=tmp0ime, users1=imena,
-                                   users2=priimki, rows_tabela=None, vod_tabela=None, akcija_tabela=None,
-                                   napaka='Napaka: otroka ni v bazi!', skupna_tabela=None, akcije_vse=tmp0,
-                                   napaka2=None, napaka3=None, vodi_vse=tmp, clanarina=tmp2, napaka4=None, napaka5=None)
-
-        id_stars = tmpstars[0][0]
-        funkcija_stars = tmpstars[0][1]
-
-        id_otrok = tmpotrok[0][0]
-        funkcija_otrok = tmpotrok[0][1]
-
-
-        if funkcija_stars != 'starš':
-            return bottle.template('indexadmin.html', rows_vod=tmpime, rows_akcija=tmp0ime, users1=imena,
-                                   users2=priimki, rows_tabela=None, vod_tabela=None, akcija_tabela=None,
-                                   napaka='Napaka: vnesena oseba ni starš!', skupna_tabela=None, akcije_vse=tmp0,
-                                   napaka2=None, napaka3=None, vodi_vse=tmp, clanarina=tmp2, napaka4=None, napaka5=None)
-
-        if funkcija_otrok != 'otrok':
-            return bottle.template('indexadmin.html', rows_vod=tmpime, rows_akcija=tmp0ime, users1=imena,
-                                   users2=priimki, rows_tabela=None, vod_tabela=None, akcija_tabela=None,
-                                   napaka='Napaka: vnesena oseba ni otrok!', skupna_tabela=None, akcije_vse=tmp0,
-                                   napaka2=None, napaka3=None, vodi_vse=tmp, clanarina=tmp2, napaka4=None, napaka5=None)
-
-        c.execute("""INSERT INTO otroci VALUES (%s, %s)""", [id_stars, id_otrok])
+    if bottle.request.POST.get('relacija'):
+        c.execute("""INSERT INTO otroci VALUES (%s, %s)""", [bottle.request.forms.relacijastarsid, bottle.request.forms.relacijaotrokid])
 
     if bottle.request.POST.get('function'):  # argument je ime gumba!!!
-        c.execute("""UPDATE oseba SET funkcija = %s WHERE ime = %s AND  priimek = %s
-                        AND rojstvo = %s  AND naslov = %s""",
-                  [bottle.request.forms.function, bottle.request.forms.namefn, bottle.request.forms.surnamefn, bottle.request.forms.datefn,
-                   bottle.request.forms.addressfn])
+        if not bottle.request.forms.funkcijaosebaid:
+            # naredi neko opozorilo!!!
+            pass
+        else:
+            c.execute("""UPDATE oseba SET funkcija = %s WHERE id = %s""",
+                      [bottle.request.forms.funkcija2, bottle.request.forms.funkcijaosebaid])
 
     if bottle.request.POST.get('dodajakcijo'):
         if int(bottle.request.forms.organizator) not in idji:
             return bottle.template('indexadmin.html', rows_vod=tmpime, rows_akcija=tmp0ime, users1=imena,
                                    users2=priimki, rows_tabela=None, vod_tabela=None, akcija_tabela=None,
                                    napaka=None, skupna_tabela=None, akcije_vse=tmp0, napaka2='Napaka: organizator ni pravi!',
-                                   napaka3=None, vodi_vse=tmp, clanarina=tmp2, napaka4=None, napaka5=None)
+                                   napaka3=None, vodi_vse=tmp, clanarina=tmp2, napaka4=None, napaka5=None, izbrisani=izbrisi, parents=starsi, children=otroci)
         else:
             c.execute("""INSERT INTO akcija (ime, datum, trajanje, organizator, opis) VALUES (%s, %s, %s, %s, %s)""",
                   [bottle.request.forms.nameakc1, bottle.request.forms.dateakc1,
@@ -465,18 +415,13 @@ def index_admin_post():
 
 
     if bottle.request.POST.get('izbrisiakcijo'):
-
-        c.execute("""SELECT id FROM akcija WHERE ime=%s AND datum=%s""",
-                  [bottle.request.forms.name, bottle.request.forms.date])
-        tmp = c.fetchall()
-
         c.execute("""DELETE FROM udelezenec WHERE akcija=%s""",
-                  [tmp[0][0]])
+                  [bottle.request.forms.izbrisiakcijaid])
         c.execute("""DELETE FROM prostovoljec WHERE akcija=%s""",
-                  [tmp[0][0]])
+                  [bottle.request.forms.izbrisiakcijaid])
 
-        c.execute("""DELETE FROM akcija WHERE ime=%s AND datum=%s""",
-                  [bottle.request.forms.name, bottle.request.forms.date])
+        c.execute("""DELETE FROM akcija WHERE id=%s""",
+                  [bottle.request.forms.izbrisiakcijaid])
 
 
 
@@ -486,7 +431,7 @@ def index_admin_post():
                                    users2=priimki, rows_tabela=None, vod_tabela=None, akcija_tabela=None,
                                    napaka=None, skupna_tabela=None, akcije_vse=tmp0, napaka2=None,
                                         napaka3 = 'Napaka: vodnik ni pravi!', vodi_vse=tmp, clanarina=tmp2,
-                                   napaka4=None, napaka5=None)
+                                   napaka4=None, napaka5=None, izbrisani=izbrisi, parents=starsi, children=otroci)
         else:
             c.execute("""INSERT INTO vod (ime, starost, termin, vodnik) VALUES (%s, %s, %s, %s)""",
                   [bottle.request.forms.namevod1, bottle.request.forms.starost,
@@ -494,16 +439,11 @@ def index_admin_post():
 
 
     if bottle.request.POST.get('izbrisivod'):
-
-        c.execute("""SELECT id FROM vod WHERE ime=%s""",
-                  [bottle.request.forms.name])
-        tmp = c.fetchall()
-
         c.execute("""UPDATE oseba SET vod = NULL WHERE vod = %s""",
-                  [tmp[0][0]])
+                  [bottle.request.forms.izbrisivodid])
 
-        c.execute("""DELETE FROM vod WHERE ime=%s""",
-                  [bottle.request.forms.name])
+        c.execute("""DELETE FROM vod WHERE id=%s""",
+                  [bottle.request.forms.izbrisivodid])
 
     if bottle.request.POST.get('isci'):  # argument je ime gumba!!!
         if bottle.request.forms.priimek == '':
@@ -514,7 +454,7 @@ def index_admin_post():
             return bottle.template('indexadmin.html', rows_vod=tmpime, rows_akcija=tmp0ime, users1=imena,
                                    users2=priimki, rows_tabela=rows_tab, vod_tabela=None, akcija_tabela=None,
                                    napaka=None, skupna_tabela=None, akcije_vse=tmp0, napaka2=None, napaka3=None,
-                                   vodi_vse=tmp, clanarina=tmp2, napaka4=None, napaka5=None)
+                                   vodi_vse=tmp, clanarina=tmp2, napaka4=None, napaka5=None, izbrisani=izbrisi, parents=starsi, children=otroci)
         if bottle.request.forms.ime == '':
             c.execute("""SELECT oseba.ime, priimek, rojstvo, naslov, telefon, mail, clanarina, 
             zaposlitev, funkcija, vod.ime FROM oseba LEFT OUTER JOIN vod ON oseba.vod = vod.id
@@ -523,7 +463,7 @@ def index_admin_post():
             return bottle.template('indexadmin.html', rows_vod=tmpime, rows_akcija=tmp0ime, users1=imena,
                                    users2=priimki, rows_tabela=rows_tab, vod_tabela=None, akcija_tabela=None,
                                    napaka=None, skupna_tabela=None, akcije_vse=tmp0, napaka2=None, napaka3=None,
-                                   vodi_vse=tmp, clanarina=tmp2, napaka4=None, napaka5=None)
+                                   vodi_vse=tmp, clanarina=tmp2, napaka4=None, napaka5=None, izbrisani=izbrisi, parents=starsi, children=otroci)
         if bottle.request.forms.ime != '' and bottle.request.forms.priimek != '':
             c.execute("""SELECT oseba.ime, priimek, rojstvo, naslov, telefon, mail, clanarina, 
             zaposlitev, funkcija, vod.ime FROM oseba LEFT OUTER JOIN vod ON oseba.vod = vod.id
@@ -532,7 +472,7 @@ def index_admin_post():
             return bottle.template('indexadmin.html', rows_vod=tmpime, rows_akcija=tmp0ime, users1=imena,
                                    users2=priimki,  rows_tabela=rows_tab, vod_tabela=None, akcija_tabela=None,
                                    napaka=None, skupna_tabela=None, akcije_vse=tmp0, napaka2=None, napaka3=None,
-                                   vodi_vse=tmp, clanarina=tmp2, napaka4=None, napaka5=None)
+                                   vodi_vse=tmp, clanarina=tmp2, napaka4=None, napaka5=None, izbrisani=izbrisi, parents=starsi, children=otroci)
     if bottle.request.POST.get('izpis'):  # argument je ime gumba!!!
         if bottle.request.forms.vod2 == '':
             c.execute("""SELECT oseba.ime, oseba.priimek, oseba.funkcija, akcija.ime FROM oseba JOIN udelezenec 
@@ -542,7 +482,7 @@ def index_admin_post():
             return bottle.template('indexadmin.html', rows_vod=tmpime, rows_akcija=tmp0ime, users1=imena,
                                    users2=priimki, rows_tabela=None, vod_tabela=None, akcija_tabela=rows_akc,
                                    napaka=None, skupna_tabela=None, akcije_vse=tmp0, napaka2=None, napaka3=None,
-                                   vodi_vse=tmp, clanarina=tmp2, napaka4=None, napaka5=None)
+                                   vodi_vse=tmp, clanarina=tmp2, napaka4=None, napaka5=None, izbrisani=izbrisi, parents=starsi, children=otroci)
         if bottle.request.forms.akcija2 == '':
             c.execute("""SELECT oseba.ime, oseba.priimek, oseba.funkcija, vod.ime FROM oseba JOIN vod ON oseba.vod = vod.id
                         WHERE vod.ime=%s ORDER BY oseba.ime ASC""", [bottle.request.forms.vod2])
@@ -550,7 +490,7 @@ def index_admin_post():
             return bottle.template('indexadmin.html', rows_vod=tmpime, rows_akcija=tmp0ime, users1=imena,
                                    users2=priimki, rows_tabela=None, vod_tabela=rows_vd, akcija_tabela=None,
                                    napaka=None, skupna_tabela=None, akcije_vse=tmp0, napaka2=None, napaka3=None,
-                                   vodi_vse=tmp, clanarina=tmp2, napaka4=None, napaka5=None)
+                                   vodi_vse=tmp, clanarina=tmp2, napaka4=None, napaka5=None, izbrisani=izbrisi, parents=starsi, children=otroci)
         if bottle.request.forms.akcija2 != '' and bottle.request.forms.vod2 != '':
             c.execute("""SELECT oseba.ime, oseba.priimek, oseba.funkcija, akcija.ime, vod.ime FROM oseba LEFT OUTER JOIN udelezenec ON oseba.id = udelezenec.oseba
 LEFT OUTER JOIN akcija ON akcija.id = udelezenec.akcija LEFT OUTER JOIN vod ON oseba.vod = vod.id
@@ -562,7 +502,7 @@ LEFT OUTER JOIN akcija ON akcija.id = udelezenec.akcija LEFT OUTER JOIN vod ON o
             return bottle.template('indexadmin.html', rows_vod=tmpime, rows_akcija=tmp0ime, users1=imena,
                                    users2=priimki, rows_tabela=None, vod_tabela=None, akcija_tabela=None, napaka=None,
                                    skupna_tabela=skp_tabela, akcije_vse=tmp0, napaka2=None, napaka3=None, vodi_vse=tmp,
-                                   clanarina=tmp2, napaka4=None, napaka5=None)
+                                   clanarina=tmp2, napaka4=None, napaka5=None, izbrisani=izbrisi, parents=starsi, children=otroci)
 
     bottle.redirect('/indexadmin/')
 

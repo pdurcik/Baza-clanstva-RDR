@@ -65,15 +65,15 @@ def static(filename):
        /static/..."""
     return bottle.static_file(filename, root=static_dir)
 
-@bottle.route('/')
-def main():
-    """Glavna stran."""
-    # Iz cookieja dobimo uporabnika (ali ga preusmerimo na login, če
-    # nima cookija)
-    (username, ime) = get_user()
-
-    # Vrnemo predlogo za glavno stran
-    return bottle.template('uvodna_stran.html')
+# @bottle.route('/')
+# def main():
+#     """Glavna stran."""
+#     # Iz cookieja dobimo uporabnika (ali ga preusmerimo na login, če
+#     # nima cookija)
+#     (username, ime) = get_user()
+#
+#     # Vrnemo predlogo za glavno stran
+#     return bottle.template('uvodna_stran.html')
 
 @bottle.get('/')
 def index():
@@ -308,7 +308,7 @@ def index_admin_post():
     priimki = [x[1] for x in tmp1]
     idji = [x[2] for x in tmp1]
 
-    c.execute("""SELECT ime,priimek, telefon, mail, funkcija FROM oseba WHERE clanarina=0 ORDER BY ime ASC""")
+    c.execute("""SELECT ime,priimek, telefon, mail, funkcija FROM oseba WHERE clanarina=0 AND funkcija='otrok' ORDER BY ime ASC""")
     tmp2 = c.fetchall()
 
     if bottle.request.POST.get('dodajclan'): #argument je ime gumba!!!

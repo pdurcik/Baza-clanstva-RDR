@@ -18,9 +18,7 @@ def ustvari_tabelo(seznam):
     conn.commit()
 
 def pobrisi_tabelo(tabela):
-    cur.execute("""
-        DROP TABLE %s;
-    """ % tabela[0])
+    cur.execute("""DROP TABLE %s;""", tabela[0])
     print("Izbrisana tabela %s" %tabela[0])
     conn.commit()
 
@@ -63,13 +61,6 @@ def dodaj_stolpec(table, stolpec, datatype):
             ADD %s %s;
         """ % (table, stolpec, datatype))
     conn.commit()
-
-
-# oseba mora imeti stolpec vod, ki ima vrednosti null
-# prostovoljec in udeleženec so tabele z referencami na id akcij in oseb
-# janos: če ima puščico, je nov stolpec. če je nima, je nova tabela
-# je starš ista finta kot na vajah
-# vod INTEGER NOT NULL REFERENCES vod(id)
 
 
 def izbrisi_vse_tabele():

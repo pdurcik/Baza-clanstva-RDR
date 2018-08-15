@@ -81,6 +81,11 @@ width:100px; margin-top: 8px;">Dodaj</button>
 				<button type="submit" value="izbrisimemberid" name="izbrisimember" style="float:right;
 width:100px; margin-top: 8px;">Izbriši</button>
 			</div>
+                        <h5>
+                %if napaka5 is not None:
+                    {{napaka5}}
+                %end
+              </h5>
      </form>
 
     <br><br><br><br>
@@ -115,6 +120,11 @@ width:100px; margin-top: 8px;">Potrdi</button>
         <div class="custom-select" style="width:200px;">
           </div>
 			</div>
+                                   	  <h5>
+                %if napaka is not None:
+                    {{napaka}}
+                %end
+              </h5>
      </form>
      <br>
      <br>
@@ -125,10 +135,10 @@ width:100px; margin-top: 8px;">Potrdi</button>
 
                     <form action=".">
                   <select name="funkcijaosebaid">
-                    <option value="" selected>ime priimek, naslov, datum rojstva, ID</option>
-                     % for row in izbrisani:
+                    <option value="" selected>ime priimek, naslov, datum rojstva, funkcija, ID</option>
+                     % for row in funkcije:
 
-                            <option value="{{row[4]}}">{{row[0]}} {{row[1]}}, {{row[2]}}, {{row[3]}}, {{row[4]}}</option>
+                            <option value="{{row[0]}}">{{row[1]}} {{row[2]}}, {{row[3]}}, {{row[4]}}, {{row[5]}}, {{row[0]}}</option>
 
                       % end
                   </select>
@@ -151,7 +161,11 @@ width:100px; margin-top: 8px;">Spremeni</button>
 			<div class="custom-select" style="width:200px;">
           </div>
             </div>
-
+              <h5>
+                %if napaka6 is not None:
+                    {{napaka6}}
+                %end
+              </h5>
      </form>
 
   </div>

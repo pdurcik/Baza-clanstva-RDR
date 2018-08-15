@@ -50,8 +50,8 @@ akcija = ["akcija",
 prostovoljec = ["prostovoljec",
          """
          CREATE TABLE prostovoljec(
-            oseba INTEGER NOT NULL REFERENCES oseba(id),
-            akcija INTEGER NOT NULL REFERENCES akcija(id)
+            oseba INTEGER NOT NULL REFERENCES oseba(id) ON DELETE CASCADE,
+            akcija INTEGER NOT NULL REFERENCES akcija(id) ON DELETE CASCADE
             )
 
         ;
@@ -65,8 +65,8 @@ prostovoljec = ["prostovoljec",
 udelezenec = ["udelezenec",
          """
          CREATE TABLE udelezenec(
-            oseba INTEGER NOT NULL REFERENCES oseba(id),
-            akcija INTEGER NOT NULL REFERENCES akcija(id)
+            oseba INTEGER NOT NULL REFERENCES oseba(id) ON DELETE CASCADE,
+            akcija INTEGER NOT NULL REFERENCES akcija(id) ON DELETE CASCADE
             )
 
         ;
@@ -99,8 +99,8 @@ vod = ["vod",
 otroci = ["otroci",
          """
          CREATE TABLE otroci (
-         stars INTEGER NOT NULL REFERENCES oseba(id),
-         otrok INTEGER NOT NULL REFERENCES oseba(id),
+         stars INTEGER NOT NULL REFERENCES oseba(id) ON DELETE CASCADE,
+         otrok INTEGER NOT NULL REFERENCES oseba(id) ON DELETE CASCADE,
          PRIMARY KEY (stars, otrok),
          CHECK (stars <> otrok)
          );

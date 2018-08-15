@@ -22,14 +22,15 @@
                     Otrok ni vpisan v nobeno akcijo.
                 % end
                 %for j in prijavljeni_na_akcije[stevec]:
-
+                    % for m in j:
                     %st = 0
-                    %for k in akcije:
-                        %if k[0]==j[0]:
-                            {{akcije[st][1]}}
+                    %for k in akcije_prikaz:
+                        %if k[0]==m:
+                            {{akcije_prikaz[st][1]}}
                         %end
                         %st +=1
                     %end
+          %end
 
                 %end
             </p>
@@ -40,76 +41,41 @@
       </i></p><br>
 
       <div class="w3-row-padding w3-padding-32" style="margin:0 -16px">
+
+          % for i in range(len(akcije_prikaz)):
+          % ime = str(akcije_prikaz[-(i+1)][1])
         <div class="w3-third w3-margin-bottom">
           <div class="w3-container w3-white">
 
-            %
-              <p><b>{{akcije[-3][1]}}</b></p>
-
-
-            <p class="w3-opacity">{{akcije[-3][2]}}</p>
-            <p>{{akcije[-3][5]}}</p>
-
-          <form action="." role="form" method="post" class="form">
+            <p><b>{{akcije_prikaz[-(i+1)][1]}}</b></p>
+              <p class="w3-opacity">{{akcije_prikaz[-(i+1)][2]}}</p>
+            <p>{{akcije_prikaz[-(i+1)][5]}}</p>
+        <form action="." role="form" method="post" class="form">
           Prijava na akcijo:
-          <select name="Izberi_otroka1">
+            % ime1 = 'otrok'+str(akcije_prikaz[-(i+1)][0])
+          <select name={{ime1}}>
                 %for row in rows:
                   <option value={{row[0]}}>{{row[1]}}</option>
                 %end
+              % ime = 'prijaviAkcija'+str(akcije_prikaz[-(i+1)][0])
 
           </select>
-            <button type="submit" value="prijaviAkcija1", name="prijaviAkcija1" style="float:right; width:100px; margin-top: 8px;">Prijavi otroka</button>
+            <button type="submit" value={{ime}} name={{ime}} style="float:right; width:100px; margin-top: 8px;">Prijavi otroka</button>
           </form>
           </div>
           </div>
+        %end
 
-
-        <div class="w3-third w3-margin-bottom">
-          <div class="w3-container w3-white">
-            <p><b>{{akcije[-2][1]}}</b></p>
-            <p class="w3-opacity">{{akcije[-2][2]}}</p>
-            <p>{{akcije[-2][5]}}</p>
-                      <form action="." role="form" method="post" class="form">
-          Prijava na akcijo:
-          <select name="Izberi_otroka2">
-            %for row in rows:
-
-               <option value = {{row[0]}}>{{row[1]}}</option>
-            %end
-
-          </select>
-            <button type="submit" value="prijaviAkcija2", name="prijaviAkcija2" style="float:right; width:100px; margin-top: 8px;">Prijavi otroka</button>
-                      </form>
-          </div>
-          </div>
-
-        <div class="w3-third w3-margin-bottom">
-          <div class="w3-container w3-white">
-            <p><b>{{akcije[-1][1]}}</b></p>
-            <p class="w3-opacity">{{akcije[-1][2]}}</p>
-            <p>{{akcije[-1][5]}}</p>
-                      <form action="." role="form" method="post" class="form">
-          Prijava na akcijo:
-          <select name="Izberi_otroka3">
-            %for row in rows:
-
-               <option value = {{row[0]}}>{{row[1]}}</option>
-            %end
-
-          </select>
-            <button type="submit" value="prijaviAkcija3", name="prijaviAkcija3" style="float:right; width:100px; margin-top: 8px;">Prijavi otroka</button>
-
-
-          </form>
-
-          </div>
-          </div>
         </div>
+
 
 
         <div class="card-body">
           <div class="table">
             <table class="table table-bordered" id="dataTable" width="100%" cellspacing="5">
+                SEZNAM VAŠIH OTROK
+                <br>
+                <br>
 			  <tbody>
 			  % for row in rows:
 				<tr>
@@ -159,6 +125,7 @@
 				<button type="submit" value="prijavi", name="prijavi" style="float:right; width:100px; margin-top: 8px;">Vpis</button>
 			</div>
      </form>
+
 
     </div>
     </div>

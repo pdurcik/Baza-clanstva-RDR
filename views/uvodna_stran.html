@@ -16,37 +16,20 @@
       <p class="w3-opacity w3-center"><i>Ne pozabite se prijavit na akcijo!</i></p><br>
 
       <div class="w3-row-padding w3-padding-32" style="margin:0 -16px">
+
+
+        % for i in range(min(len(akcije_prikaz), 3)):
         <div class="w3-third w3-margin-bottom">
           <div class="w3-container w3-white">
 
-            %
-              <p><b>{{akcije[-3][1]}}</b></p>
+            <p><b>{{akcije_prikaz[-(i+1)][1]}}</b></p>
 
-
-            <p class="w3-opacity">{{akcije[-3][2]}}</p>
-            <p>{{akcije[-3]['opis']}}</p>
+            <p class="w3-opacity">{{akcije_prikaz[-(i+1)][2]}}</p>
+            <p>{{akcije_prikaz[-(i+1)][5]}}</p>
           </div>
           </div>
+        %end
 
-        <div class="w3-third w3-margin-bottom">
-          <div class="w3-container w3-white">
-            <p><b>{{akcije[-2][1]}}</b></p>
-            <p class="w3-opacity">{{akcije[-2][2]}}</p>
-            <p>{{akcije[-2]['opis']}}</p>
-
-          </div>
-          </div>
-
-        <div class="w3-third w3-margin-bottom">
-          <div class="w3-container w3-white">
-            <p><b>{{akcije[-1][1]}}</b></p>
-            <p class="w3-opacity">{{akcije[-1][2]}}</p>
-            <p>{{akcije[-1]['opis']}}</p>
-                      <form action="." role="form" method="post" class="form">
-
-
-          </div>
-          </div>
         </div>
        </div>
         </div>

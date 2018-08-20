@@ -51,7 +51,8 @@ prostovoljec = ["prostovoljec",
          """
          CREATE TABLE prostovoljec(
             oseba INTEGER NOT NULL REFERENCES oseba(id) ON DELETE CASCADE,
-            akcija INTEGER NOT NULL REFERENCES akcija(id) ON DELETE CASCADE
+            akcija INTEGER NOT NULL REFERENCES akcija(id) ON DELETE CASCADE,
+            PRIMARY KEY (oseba, akcija)
             )
 
         ;
@@ -66,7 +67,8 @@ udelezenec = ["udelezenec",
          """
          CREATE TABLE udelezenec(
             oseba INTEGER NOT NULL REFERENCES oseba(id) ON DELETE CASCADE,
-            akcija INTEGER NOT NULL REFERENCES akcija(id) ON DELETE CASCADE
+            akcija INTEGER NOT NULL REFERENCES akcija(id) ON DELETE CASCADE,
+            PRIMARY KEY (oseba, akcija)
             )
 
         ;

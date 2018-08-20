@@ -145,7 +145,7 @@ for i in prostovoljci_0:
     INSERT
     INTO
     prostovoljec(oseba, akcija)
-    VALUES(%s, %s);""" % (i, 0))
+    VALUES(%s, %s);""", [i, 0])
     conn.commit()
 
 for i in prostovoljci_1:
@@ -154,7 +154,7 @@ for i in prostovoljci_1:
     INSERT
     INTO
     prostovoljec(oseba, akcija)
-    VALUES(%s, %s);""" % (i, 1))
+    VALUES(%s, %s);""", [i, 1])
     conn.commit()
 
 for i in prostovoljci_2:
@@ -163,7 +163,7 @@ for i in prostovoljci_2:
     INSERT
     INTO
     prostovoljec(oseba, akcija)
-    VALUES(%s, %s);""" % (i, 2))
+    VALUES(%s, %s);""", [i, 2])
     conn.commit()
 
 #####otroci starsi
